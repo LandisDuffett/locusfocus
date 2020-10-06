@@ -6,7 +6,7 @@ import { locuslistsService } from '../services/LocuslistsService'
 
 
 //PUBLIC
-export class BoardsController extends BaseController {
+export class LocuslistsController extends BaseController {
   constructor() {
     super("api/locuslists")
     this.router

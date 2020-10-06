@@ -6,9 +6,9 @@ import { studyitemsService } from '../services/StudyitemsService'
 
 
 //PUBLIC
-export class SessionlistsController extends BaseController {
+export class StudyitemsController extends BaseController {
     constructor() {
-        super("api/sessionlists")
+        super("api/studyitems")
         this.router
             .use(auth0provider.getAuthorizedUserInfo)
             .get('', this.getAll)

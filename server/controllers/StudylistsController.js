@@ -1,31 +1,60 @@
-import express from "express";
+import express from 'express'
 import BaseController from "../utils/BaseController";
-import { valuesService } from "../services/ValuesService";
 import auth0provider from "@bcwdev/auth0provider";
+import { studylistsService } from '../services/StudylistsService'
 
-export class ValuesController extends BaseController {
+
+
+//PUBLIC
+export class StudylistsController extends BaseController {
   constructor() {
-    super("api/values");
+    super("api/studylists")
     this.router
-      .get("", this.getAll)
-      // NOTE: Beyond this point all routes require Authorization tokens (the user must be logged in)
-      .use(auth0provider.isAuthorized)
-      .post("", this.create);
+      .use(auth0provider.getAuthorizedUserInfo)
+      .get('', this.getAll)
+      .get('/:id', this.getById)
+      .post('', this.create)
+      .put('/:id', this.edit)
+      .delete('', this.delete)
   }
+
   async getAll(req, res, next) {
     try {
-      return res.send(["value1", "value2"]);
-    } catch (error) {
-      next(error);
+      //only gets the locus list of user who is logged in
+      let data = await studylistsService.getAll(req.userInfo.email)
+      return res.send(data)
     }
+    catch (err) { next(err) }
   }
+
+  async getById(req, res, next) {
+    try {
+      let data = await studylistsService.getById(req.params.id, req.userInfo.email)
+      return res.send(data)
+    } catch (error) { next(error) }
+  }
+
   async create(req, res, next) {
     try {
-      // NOTE NEVER TRUST THE CLIENT TO ADD THE CREATOR ID
-      req.body.creatorId = req.user.sub;
-      res.send(req.body);
-    } catch (error) {
-      next(error);
-    }
+      req.body.creatorEmail = req.userInfo.email
+      let data = await studylistsService.create(req.body)
+      return res.status(201).send(data)
+    } catch (error) { next(error) }
+  }
+
+  async edit(req, res, next) {
+    try {
+      let data = await studylistsService.edit(req.params.id, req.userInfo.email, req.body)
+      return res.send(data)
+    } catch (error) { next(error) }
+  }
+
+  async delete(req, res, next) {
+    try {
+      await studylistsService.delete(req.params.id, req.userInfo.email)
+      return res.send("Successfully deleted")
+    } catch (error) { next(error) }
   }
 }
+
+
