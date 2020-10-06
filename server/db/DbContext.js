@@ -1,11 +1,18 @@
 import mongoose from "mongoose";
-import ValueSchema from "../models/Value";
+import LocuslistSchema from "../models/Locuslist";
 import ProfileSchema from "../models/Profile";
-import BoardSchema from '../models/Board'
+import StudylistSchema from '../models/Studylist';
+import SessionlistSchema from "../models/Sessionlist";
+import StudyitemSchema from "../models/Studyitem";
+
 class DbContext {
-  Values = mongoose.model("Value", ValueSchema);
+  Locuslists = mongoose.model("Locuslist", LocuslistSchema);
   Profile = mongoose.model("Profile", ProfileSchema);
-  Boards = mongoose.model("Board", BoardSchema)
+  Studylists = mongoose.model("Studylist", StudylistSchema);
+  Sessionlists = mongoose.model("Sessionlist", SessionlistSchema);
+  Studyitems = mongoose.model("Studyitem", StudyitemSchema);
+
+
 }
 
 export const dbContext = new DbContext();

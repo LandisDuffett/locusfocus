@@ -1,15 +1,14 @@
 import mongoose from "mongoose"
 let Schema = mongoose.Schema
-let ObjectId = Schema.Types.ObjectId
+import { dbContext } from "../db/DbContext"
 
-const List = new Schema({
+const Studylist = new Schema({
   title: { type: String, required: true },
   creatorEmail: { type: String, required: true },
-  boardId: { type: ObjectId, ref: 'Board', required: true }
 }, { timestamps: true, toJSON: { virtuals: true } })
 
 
-List.virtual("creator",
+Studylist.virtual("creator",
   {
     localField: "creatorEmail",
     ref: "Profile",
@@ -17,25 +16,25 @@ List.virtual("creator",
     justOne: true
   })
 
-//CASCADE ON DELETE
-List.pre('deleteMany', function (next) {
+/*CASCADE ON DELETE
+Studylist.pre('deleteMany', function (next) {
   //lets find all the lists and remove them
   Promise.all([
     //something like...
-    //dbContext.Task.deleteMany({ listId: this._conditions_id }),
+    dbContext.Studyitem.deleteMany({ studyListId: this._id }),
   ])
     .then(() => next())
     .catch(err => next(err))
-})
+})*/
 
 //CASCADE ON DELETE
-List.pre('findOneAndRemove', function (next) {
+Studylist.pre('findOneAndRemove', function (next) {
   //lets find all the lists and remove them
   Promise.all([
-    // dbContext.Task.deleteMany({ boardId: this._conditions._id })
+    dbContext.Studyitem.deleteMany({ studyListId: this._id })
   ])
     .then(() => next())
     .catch(err => next(err))
 })
 
-export default List
+export default Studylist
