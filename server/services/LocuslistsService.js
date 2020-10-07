@@ -12,10 +12,18 @@ class LocuslistsService {
     return data
   }
 
+  async addLocus(id, body) {
+    return await dbContext.Locuslists.findByIdAndUpdate(
+      { _id: id },
+      { $addToSet: { items: body } },
+      { new: true }
+    );
+  }
+
   async edit(id, userEmail, update) {
     let data = await dbContext.Locuslists.findOneAndUpdate({ _id: id, creatorEmail: userEmail }, update, { new: true })
     if (!data) {
-      throw new BadRequest("Invalid ID or you do not own this locus list");
+      throw new BadRequest("Invalid ID or you do not own this locuslist");
     }
     return data;
   }

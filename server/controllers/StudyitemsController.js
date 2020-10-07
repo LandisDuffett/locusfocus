@@ -15,7 +15,7 @@ export class StudyitemsController extends BaseController {
             .get('/:id', this.getById)
             .post('', this.create)
             .put('/:id', this.edit)
-            .delete('', this.delete)
+            .delete('/:id', this.delete)
     }
 
     async getAll(req, res, next) {

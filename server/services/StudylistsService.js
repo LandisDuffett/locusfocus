@@ -35,7 +35,13 @@ class StudylistsService {
         }
     }
 
+    async deleteStudyitems(id, userEmail) {
+        let data = await dbContext.Studyitems.deleteMany({ studyListId: id, creatorEmail: userEmail });
+        if (!data) {
+            throw new BadRequest("Invalid ID or you do not own this bug.")
+        }
+        return data;
+    }
 }
-
 
 export const studylistsService = new StudylistsService()

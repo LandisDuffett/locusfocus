@@ -1,3 +1,4 @@
+import { STATES } from 'mongoose'
 import Vue from 'vue'
 import Vuex from 'vuex'
 import router from '../router/index'
@@ -10,15 +11,22 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     user: {},
-    boards: [],
-    activeBoard: {}
+    locuslist: {},
+    studylists: [],
+    studyitems: []
   },
   mutations: {
     setUser(state, user) {
       state.user = user
     },
-    setBoards(state, boards) {
-      state.boards = boards
+    setLocuslist(state, locuslist) {
+      state.locuslist = locuslist
+    },
+    setStudylists(state, studylists) {
+      state.studylists = studylists
+    },
+    setStudyitems(state, studyitems) {
+      state.studyitems = studyitems
     }
   },
   actions: {
@@ -39,27 +47,81 @@ export default new Vuex.Store({
     },
     //#endregion
 
-
-    //#region -- BOARDS --
-    getBoards({ commit, dispatch }) {
-      api.get('boards')
-        .then(res => {
-          commit('setBoards', res.data)
+    //#region -- LOCUSLISTS --
+    getLocuslist({ commit }) {
+      api.get('locuslists').then(res => {
+        commit('setLocuslist', res.data)
+      })
+    },
+    addLocusitem({ commit, state }, data) {
+      commit('setLocuslist', data)
+    },
+    addLocus({ commit, dispatch }, data) {
+      api.post("locuslists/" + data.locusListId + "/items", data)
+        .then(serverList => {
+          dispatch('getLocuslist')
         })
     },
-    addBoard({ commit, dispatch }, boardData) {
-      api.post('boards', boardData)
-        .then(serverBoard => {
-          dispatch('getBoards')
+    async editLocuslist({ dispatch }, data) {
+      try {
+        let res = await api.put('locuslists/' + data.id, data).then(res => {
+          dispatch('getLocuslist')
         })
+      } catch (error) {
+        console.error(error)
+        alert("You may not edit another person's bug report.")
+      }
+    },
+    //#endregion
+
+    //#region -- STUDYLISTS --
+    getStudylists({ commit }) {
+      api.get('studylists')
+        .then(res => {
+          commit('setStudylists', res.data)
+        })
+    },
+    addStudylist({ dispatch }, data) {
+      api.post('boards', data)
+        .then(serverStudylists => {
+          dispatch('getStudylists')
+        })
+    },
+    deleteStudylist({ dispatch }, id) {
+      api.delete('studylists/' + id).then(serverStudylists => {
+        //dispatch('deleteStudyitemsByList', id)
+        dispatch('deleteStudyitemsByList', id)
+      })
+    },
+
+    //#endregion
+
+    //#region -- STUDYITEMS --
+    getStudyitems({ commit }) {
+      api.get('studyitems')
+        .then(res => {
+          commit('setStudyitems', res.data)
+        })
+    },
+    addStudyitem({ dispatch }, data) {
+      api.post('studyitems', data)
+        .then(serverStudyitems => {
+          dispatch('getStudyitems')
+        })
+    },
+    deleteStudyitem({ dispatch }, id) {
+      api.delete('studylists', id).then(serverStudyitems => {
+        dispatch('getStudyitems')
+      })
+    },
+    deleteStudyitemsByList({ dispatch }, id) {
+      api.delete('studylists/' + id + '/studyitems').then(serverStudyitems => {
+        dispatch('getStudylists')
+      }).then(serverStudyitems => {
+        dispatch('getStudyitems')
+      })
     }
     //#endregion
 
-
-    //#region -- LISTS --
-
-
-
-    //#endregion
   }
 })

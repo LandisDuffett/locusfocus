@@ -28,13 +28,13 @@ Studylist.pre('deleteMany', function (next) {
 })*/
 
 //CASCADE ON DELETE
-Studylist.pre('findOneAndRemove', function (next) {
+/*Studylist.pre('remove', function (next) {
   //lets find all the lists and remove them
   Promise.all([
-    dbContext.Studyitem.deleteMany({ studyListId: this._id })
+    dbContext.Studyitems.deleteMany({ studyListId: this._id })
   ])
     .then(() => next())
     .catch(err => next(err))
-})
+})*/
 
 export default Studylist

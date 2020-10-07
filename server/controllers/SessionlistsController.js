@@ -15,7 +15,7 @@ export class SessionlistsController extends BaseController {
             .get('/:id', this.getById)
             .post('', this.create)
             .put('/:id', this.edit)
-            .delete('', this.delete)
+            .delete('/:id', this.delete)
     }
 
 

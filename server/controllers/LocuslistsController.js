@@ -14,7 +14,8 @@ export class LocuslistsController extends BaseController {
       .get('', this.getAll)
       .post('', this.create)
       .put('/:id', this.edit)
-      .delete('', this.delete)
+      .delete('/:id', this.delete)
+      .post("/:id/items", this.addLocus)
   }
 
 
@@ -33,6 +34,17 @@ export class LocuslistsController extends BaseController {
       let data = await locuslistsService.create(req.body)
       return res.status(201).send(data)
     } catch (error) { next(error) }
+  }
+
+  async addLocus(req, res, next) {
+    try {
+      let locus = await locuslistsService.addLocus(req.params.id, req.body);
+      if (locus) {
+        return res.send(locus);
+      }
+    } catch (error) {
+      next(error);
+    }
   }
 
   async edit(req, res, next) {
