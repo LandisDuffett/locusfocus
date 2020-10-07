@@ -11,7 +11,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     user: {},
-    locuslist: {},
+    loci: [],
     studylists: [],
     studyitems: []
   },
@@ -19,8 +19,8 @@ export default new Vuex.Store({
     setUser(state, user) {
       state.user = user
     },
-    setLocuslist(state, locuslist) {
-      state.locuslist = locuslist
+    setLoci(state, loci) {
+      state.loci = loci
     },
     setStudylists(state, studylists) {
       state.studylists = studylists
@@ -47,30 +47,32 @@ export default new Vuex.Store({
     },
     //#endregion
 
-    //#region -- LOCUSLISTS --
-    getLocuslist({ commit }) {
-      api.get('locuslists').then(res => {
-        commit('setLocuslist', res.data)
+    //#region -- LOCI --
+    getLoci({ commit }) {
+      api.get('loci').then(res => {
+        commit('setLoci', res.data)
       })
     },
-    addLocusitem({ commit, state }, data) {
-      commit('setLocuslist', data)
-    },
-    addLocus({ commit, dispatch }, data) {
-      api.post("locuslists/" + data.locusListId + "/items", data)
-        .then(serverList => {
-          dispatch('getLocuslist')
+    addLocus({ dispatch }, data) {
+      api.post("loci", data)
+        .then(server => {
+          dispatch('getLoci')
         })
     },
-    async editLocuslist({ dispatch }, data) {
+    async editLoci({ dispatch }, data) {
       try {
-        let res = await api.put('locuslists/' + data.id, data).then(res => {
-          dispatch('getLocuslist')
+        let res = await api.put('loci/' + data.id, data).then(res => {
+          dispatch('getLoci')
         })
       } catch (error) {
         console.error(error)
-        alert("You may not edit another person's bug report.")
+        alert("You may not edit another person's loci.")
       }
+    },
+    deleteLocus({ dispatch }, id) {
+      api.delete('loci/' + id).then(server => {
+        dispatch('getLoci')
+      })
     },
     //#endregion
 
@@ -83,17 +85,15 @@ export default new Vuex.Store({
     },
     addStudylist({ dispatch }, data) {
       api.post('boards', data)
-        .then(serverStudylists => {
+        .then(server => {
           dispatch('getStudylists')
         })
     },
     deleteStudylist({ dispatch }, id) {
-      api.delete('studylists/' + id).then(serverStudylists => {
-        //dispatch('deleteStudyitemsByList', id)
+      api.delete('studylists/' + id).then(server => {
         dispatch('deleteStudyitemsByList', id)
       })
     },
-
     //#endregion
 
     //#region -- STUDYITEMS --
@@ -105,17 +105,17 @@ export default new Vuex.Store({
     },
     addStudyitem({ dispatch }, data) {
       api.post('studyitems', data)
-        .then(serverStudyitems => {
+        .then(server => {
           dispatch('getStudyitems')
         })
     },
     deleteStudyitem({ dispatch }, id) {
-      api.delete('studylists', id).then(serverStudyitems => {
+      api.delete('studylists', id).then(server => {
         dispatch('getStudyitems')
       })
     },
     deleteStudyitemsByList({ dispatch }, id) {
-      api.delete('studylists/' + id + '/studyitems').then(serverStudyitems => {
+      api.delete('studylists/' + id + '/studyitems').then(server => {
         dispatch('getStudylists')
       }).then(serverStudyitems => {
         dispatch('getStudyitems')

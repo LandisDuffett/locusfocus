@@ -1,12 +1,12 @@
 import mongoose from "mongoose";
-import LocuslistSchema from "../models/Locuslist";
+import LocusSchema from "../models/Locus";
 import ProfileSchema from "../models/Profile";
 import StudylistSchema from '../models/Studylist';
 import SessionlistSchema from "../models/Sessionlist";
 import StudyitemSchema from "../models/Studyitem";
 
 class DbContext {
-  Locuslists = mongoose.model("Locuslist", LocuslistSchema);
+  Loci = mongoose.model("Locus", LocusSchema);
   Profile = mongoose.model("Profile", ProfileSchema);
   Studylists = mongoose.model("Studylist", StudylistSchema);
   Sessionlists = mongoose.model("Sessionlist", SessionlistSchema);

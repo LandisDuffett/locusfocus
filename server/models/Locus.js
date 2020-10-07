@@ -2,20 +2,13 @@ import mongoose from "mongoose"
 let Schema = mongoose.Schema
 let ObjectId = Schema.Types.ObjectId
 
-const Locus = new Schema(
-  {
-    description: { type: String, required: true },
-    image: { type: String, required: false },
-    locusListId: { type: String, required: true },
-  }
-)
-
-const Locuslist = new Schema({
-  items: [Locus],
+const Locus = new Schema({
+  description: { type: String, required: true },
+  image: { type: String, required: false },
   creatorEmail: { type: String, required: true }
 }, { timestamps: true, toJSON: { virtuals: true } })
 
-Locuslist.virtual("creator",
+Locus.virtual("creator",
   {
     localField: "creatorEmail",
     ref: "Profile",
@@ -23,4 +16,4 @@ Locuslist.virtual("creator",
     justOne: true
   })
 
-export default Locuslist
+export default Locus

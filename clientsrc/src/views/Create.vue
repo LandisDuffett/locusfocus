@@ -16,38 +16,32 @@
       <button type="submit">Add</button>
     </form>
     <div class="container">
-      <form @submit.prevent="editLocuslist()">
+      <form @submit.prevent="editLoci()">
         <div class="card">
           <div class="card-body" style="overflow-y: scroll; height: 10rem">
-            <div
-              v-for="locusitem in locusitems"
-              :locusitem="locusitem"
-              :key="locusitem.id"
-            >
-              <div v-for="obj in locusitem.items" :key="obj.id">
-                <textarea
-                  type="text"
-                  class="form-control row"
-                  name="locusdescription"
-                  id="locusdescription"
-                  v-model.lazy="obj.description"
-                  required
-                />
-                <textarea
-                  type="text"
-                  class="form-control row"
-                  name="locusimage"
-                  id="locusimage"
-                  v-model.lazy="obj.image"
-                  required
-                />
-                <button
-                  @click="deleteLocus()"
-                  class="btn btn-sm border rounded btn-primary"
-                >
-                  Delete locus
-                </button>
-              </div>
+            <div v-for="locus in loci" :locus="locus" :key="locus.id">
+              <textarea
+                type="text"
+                class="form-control row"
+                name="locusdescription"
+                id="locusdescription"
+                v-model.lazy="locus.description"
+                required
+              />
+              <textarea
+                type="text"
+                class="form-control row"
+                name="locusimage"
+                id="locusimage"
+                v-model.lazy="locus.image"
+                required
+              />
+              <button
+                @click="deleteLocus()"
+                class="btn btn-sm border rounded btn-primary"
+              >
+                Delete locus
+              </button>
             </div>
           </div>
         </div>
@@ -86,7 +80,7 @@ export default {
   mounted() {
     this.$store.dispatch("getStudylists");
     this.$store.dispatch("getStudyitems");
-    this.$store.dispatch("getLocuslist");
+    this.$store.dispatch("getLoci");
   },
   data() {
     return {
@@ -98,13 +92,12 @@ export default {
         description: "",
         image: "",
       },
-      updatedLocuslist: {},
       deleteStudyList: 0,
     };
   },
   computed: {
-    locusitems() {
-      return this.$store.state.locuslist;
+    loci() {
+      return this.$store.state.loci;
     },
     studylists() {
       return this.$store.state.studylists;
@@ -122,8 +115,9 @@ export default {
       });
     },
     //submits altered list and replaces old version of list with this version
-    editLocuslist() {
-      this.updatedLocuslist.items = this.$store.dispatch("edit");
+    editLoci() {
+      debugger;
+      this.$store.dispatch("editLoci", this.loci);
     },
     //deletes single item from current locuslist
     deleteLocus() {},
