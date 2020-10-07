@@ -59,7 +59,7 @@ export default new Vuex.Store({
           dispatch('getLoci')
         })
     },
-    async editLoci({ dispatch }, data) {
+    async editLocus({ dispatch }, data) {
       try {
         let res = await api.put('loci/' + data.id, data).then(res => {
           dispatch('getLoci')

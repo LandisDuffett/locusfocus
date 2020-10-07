@@ -16,32 +16,48 @@
       <button type="submit">Add</button>
     </form>
     <div class="container">
-      <form @submit.prevent="editLoci()">
+      <h3>Edit items in your locus list</h3>
+      <form>
         <div class="card">
           <div class="card-body" style="overflow-y: scroll; height: 10rem">
             <div v-for="locus in loci" :locus="locus" :key="locus.id">
-              <textarea
-                type="text"
-                class="form-control row"
-                name="locusdescription"
-                id="locusdescription"
-                v-model.lazy="locus.description"
-                required
-              />
-              <textarea
-                type="text"
-                class="form-control row"
-                name="locusimage"
-                id="locusimage"
-                v-model.lazy="locus.image"
-                required
-              />
-              <button
-                @click="deleteLocus()"
-                class="btn btn-sm border rounded btn-primary"
-              >
-                Delete locus
-              </button>
+              <div class="row justify-content-center mb-2">
+                <textarea
+                  type="text"
+                  class="form-control col-5 m-1"
+                  name="locusdescription"
+                  id="locusdescription"
+                  v-model.lazy="locus.description"
+                  required
+                />
+                <textarea
+                  type="text"
+                  class="form-control col-5 m-1"
+                  name="locusimage"
+                  id="locusimage"
+                  v-model.lazy="locus.image"
+                  required
+                />
+                <div
+                  class="col-1 align-content-center"
+                  style="display: inline-grid"
+                >
+                  <button
+                    @click="editLocus(locus)"
+                    type="button"
+                    class="row btn btn-xs border rounded btn-primary m-1"
+                  >
+                    edit
+                  </button>
+                  <button
+                    @click="deleteLocus(locus)"
+                    type="button"
+                    class="row btn btn-xs border rounded btn-primary m-1"
+                  >
+                    delete
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -115,12 +131,14 @@ export default {
       });
     },
     //submits altered list and replaces old version of list with this version
-    editLoci() {
-      debugger;
-      this.$store.dispatch("editLoci", this.loci);
+    editLocus(locus) {
+      this.$store.dispatch("editLocus", locus);
     },
     //deletes single item from current locuslist
-    deleteLocus() {},
+    deleteLocus(locus) {
+      let id = locus.id;
+      this.$store.dispatch("deleteLocus", id);
+    },
     //creates a study list with items
     addStudylist() {
       this.$store.dispatch("addStudylist", this.newBoard);
