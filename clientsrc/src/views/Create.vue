@@ -70,7 +70,7 @@
     <div>
       <h3 class="mt-5">Create a new study list</h3>
       <div>
-        <form>
+        <form @submit.prevent="createStudylist()">
           <label for="studylist">Study List Title:</label><br />
           <input
             type="text"
@@ -79,6 +79,7 @@
             v-model="newStudylist.title"
             class="mb-3"
           /><br />
+          <input type="submit" value="Create new list" />
         </form>
         <form
           @submit.prevent="addStudyitem()"
@@ -174,14 +175,14 @@
                       style="display: inline-grid"
                     >
                       <button
-                        @click="editLocus(locus)"
+                        @click="editStudy(item)"
                         type="button"
                         class="row btn btn-xs border rounded btn-primary m-1"
                       >
                         edit
                       </button>
                       <button
-                        @click="deleteLocus(locus)"
+                        @click="deleteStudy(item)"
                         type="button"
                         class="row btn btn-xs border rounded btn-primary m-1"
                       >
@@ -193,7 +194,6 @@
               </ol>
             </div>
           </div>
-          <input type="submit" value="Submit edited list" />
         </form>
       </div>
     </div>
@@ -249,7 +249,6 @@ export default {
     return {
       newStudylist: {
         title: "",
-        description: "",
       },
       newLocus: {
         description: "",
@@ -282,7 +281,7 @@ export default {
         image: this.newLocus.image,
       });
     },
-    //submits altered list and replaces old version of list with this version
+    //submits altered locus and replaces old version with this version
     editLocus(locus) {
       this.$store.dispatch("editLocus", locus);
     },
@@ -291,10 +290,20 @@ export default {
       let id = locus.id;
       this.$store.dispatch("deleteLocus", id);
     },
+
+    //submits altered study item and replaces old version with this version
+    editStudy(study) {
+      this.$store.dispatch("editStudy", study);
+    },
+    //deletes single item from current studylist
+    deleteStudy(study) {
+      let id = study.id;
+      this.$store.dispatch("deleteStudy", id);
+    },
     //creates a study list with items
-    addStudylist() {
-      this.$store.dispatch("addStudylist", this.newBoard);
-      this.newStudylist = { title: "", description: "" };
+    createStudylist() {
+      this.$store.dispatch("addStudylist", this.newStudylist);
+      this.newStudylist.title = "";
     },
     //delete any study list
     deleteStudylist() {

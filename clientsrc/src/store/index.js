@@ -88,7 +88,7 @@ export default new Vuex.Store({
         })
     },
     addStudylist({ dispatch }, data) {
-      api.post('boards', data)
+      api.post('studylists', data)
         .then(server => {
           dispatch('getStudylists')
         })
@@ -121,9 +121,21 @@ export default new Vuex.Store({
           dispatch('getStudyitems')
         })
     },
-    deleteStudyitem({ dispatch }, id) {
-      api.delete('studylists', id).then(server => {
-        dispatch('getStudyitems')
+
+    async editStudy({ dispatch }, data) {
+      try {
+        let res = await api.put('studyitems/' + data.id, data).then(res => {
+          dispatch('getCurrentstudy', data.id)
+        })
+      } catch (error) {
+        console.error(error)
+        alert("You may not edit another person's loci.")
+      }
+    },
+
+    deleteStudy({ dispatch }, id) {
+      api.delete('studyitems/' + id).then(server => {
+        dispatch('getCurrentstudy', data.id)
       })
     },
     deleteStudyitemsByList({ dispatch }, id) {
