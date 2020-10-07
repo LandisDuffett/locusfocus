@@ -13,7 +13,8 @@ export default new Vuex.Store({
     user: {},
     loci: [],
     studylists: [],
-    studyitems: []
+    studyitems: [],
+    currentstudyitems: []
   },
   mutations: {
     setUser(state, user) {
@@ -27,6 +28,9 @@ export default new Vuex.Store({
     },
     setStudyitems(state, studyitems) {
       state.studyitems = studyitems
+    },
+    setCurrentStudyitems(state, currentstudyitems) {
+      state.currentstudyitems = currentstudyitems
     }
   },
   actions: {
@@ -102,6 +106,14 @@ export default new Vuex.Store({
         .then(res => {
           commit('setStudyitems', res.data)
         })
+    },
+    async getCurrentstudy({ commit }, id) {
+      try {
+        let res = await api.get('studylists/' + id + '/studyitems')
+        commit("setCurrentStudyitems", res.data)
+      } catch (error) {
+        console.error(error)
+      }
     },
     addStudyitem({ dispatch }, data) {
       api.post('studyitems', data)

@@ -13,6 +13,7 @@ export class StudylistsController extends BaseController {
       .use(auth0provider.getAuthorizedUserInfo)
       .get('', this.getAll)
       .get('/:id', this.getById)
+      .get('/:id/studyitems', this.getStudyitemsByStudylistId)
       .post('', this.create)
       .put('/:id', this.edit)
       .delete('/:id', this.delete)
@@ -48,6 +49,15 @@ export class StudylistsController extends BaseController {
       let data = await studylistsService.edit(req.params.id, req.userInfo.email, req.body)
       return res.send(data)
     } catch (error) { next(error) }
+  }
+
+  async getStudyitemsByStudylistId(req, res, next) {
+    try {
+      let data = await studylistsService.getItemsByList(req.params.id, req.userInfo.email)
+      return res.send(data)
+    } catch (error) {
+      next(error)
+    }
   }
 
   async delete(req, res, next) {
