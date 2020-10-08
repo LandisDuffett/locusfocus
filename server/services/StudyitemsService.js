@@ -35,6 +35,13 @@ class StudyitemsService {
         }
     }
 
+    async deleteAll(userEmail) {
+        let data = await dbContext.Studyitems.deleteMany({ creatorEmail: userEmail })
+        if (!data) {
+            throw new BadRequest("Invalid ID or you do not own this locus list");
+        }
+    }
+
 }
 
 

@@ -15,6 +15,7 @@ export class LociController extends BaseController {
       .post('', this.create)
       .put('/:id', this.edit)
       .delete('/:id', this.delete)
+      .delete('', this.deleteAll)
   }
 
   async getAll(req, res, next) {
@@ -45,6 +46,13 @@ export class LociController extends BaseController {
     try {
       await lociService.delete(req.params.id, req.userInfo.email)
       return res.send("Successfully deleted")
+    } catch (error) { next(error) }
+  }
+
+  async deleteAll(req, res, next) {
+    try {
+      await lociService.deleteAll(req.userInfo.email)
+      return res.send("Deleted all items")
     } catch (error) { next(error) }
   }
 }

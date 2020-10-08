@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <router-link class="navbar-brand" :to="{ name: 'home' }"
-      >Kanban</router-link
+      >Locus Focus</router-link
     >
     <button
       class="navbar-toggler"
@@ -57,9 +57,9 @@ export default {
       console.log(this.$auth.user);
     },
     async logout() {
-      await this.$auth.logout({returnTo: window.location.origin});
-    }
-  }
+      await this.$auth.logout({ returnTo: window.location.origin });
+    },
+  },
 };
 </script>
 

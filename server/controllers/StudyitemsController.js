@@ -16,6 +16,7 @@ export class StudyitemsController extends BaseController {
             .post('', this.create)
             .put('/:id', this.edit)
             .delete('/:id', this.delete)
+            .delete('', this.deleteAll)
     }
 
     async getAll(req, res, next) {
@@ -53,6 +54,13 @@ export class StudyitemsController extends BaseController {
         try {
             await studyitemsService.delete(req.params.id, req.userInfo.email)
             return res.send("Successfully deleted")
+        } catch (error) { next(error) }
+    }
+
+    async deleteAll(req, res, next) {
+        try {
+            await studyitemsService.deleteAll(req.userInfo.email)
+            return res.send("Deleted all items")
         } catch (error) { next(error) }
     }
 }

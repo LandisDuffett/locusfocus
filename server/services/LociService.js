@@ -27,6 +27,13 @@ class LociService {
     }
   }
 
+  async deleteAll(userEmail) {
+    let data = await dbContext.Loci.deleteMany({ creatorEmail: userEmail })
+    if (!data) {
+      throw new BadRequest("Invalid ID or you do not own this locus list");
+    }
+  }
+
 }
 
 

@@ -78,6 +78,11 @@ export default new Vuex.Store({
         dispatch('getLoci')
       })
     },
+    clearLocuslist({ dispatch }) {
+      api.delete('loci').then(server => {
+        dispatch('getLoci')
+      })
+    },
     //#endregion
 
     //#region -- STUDYLISTS --
@@ -118,7 +123,7 @@ export default new Vuex.Store({
     addStudyitem({ dispatch }, data) {
       api.post('studyitems', data)
         .then(server => {
-          dispatch('getStudyitems')
+          dispatch('getCurrentstudy', data.studyListId)
         })
     },
 
@@ -133,16 +138,16 @@ export default new Vuex.Store({
       }
     },
 
-    deleteStudy({ dispatch }, id) {
-      api.delete('studyitems/' + id).then(server => {
-        dispatch('getCurrentstudy', data.id)
+    deleteStudy({ dispatch }, data) {
+      api.delete('studyitems/' + data.id).then(server => {
+        dispatch('getCurrentstudy', data.studyListId)
       })
     },
     deleteStudyitemsByList({ dispatch }, id) {
       api.delete('studylists/' + id + '/studyitems').then(server => {
         dispatch('getStudylists')
       }).then(serverStudyitems => {
-        dispatch('getStudyitems')
+        dispatch('getCurrentstudy')
       })
     }
     //#endregion
