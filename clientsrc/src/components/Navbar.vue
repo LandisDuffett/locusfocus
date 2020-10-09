@@ -24,10 +24,19 @@
         <li
           class="nav-item"
           v-if="$auth.isAuthenticated"
-          :class="{ active: $route.name == 'boards' }"
+          :class="{ active: $route.name == 'create' }"
         >
-          <router-link class="nav-link" :to="{ name: 'boards' }"
-            >My-Dashboard</router-link
+          <router-link class="nav-link" :to="{ name: 'create' }"
+            >Create lists</router-link
+          >
+        </li>
+        <li
+          class="nav-item"
+          v-if="$auth.isAuthenticated"
+          :class="{ active: $route.name == 'setup' }"
+        >
+          <router-link class="nav-link" :to="{ name: 'setup' }"
+            >Set up study session</router-link
           >
         </li>
       </ul>

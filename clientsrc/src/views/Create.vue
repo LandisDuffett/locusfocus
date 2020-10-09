@@ -1,5 +1,6 @@
 <template>
   <div class="create">
+    <!--create locus lists begin-->
     <div>
       <h3>Add item to your locus list:</h3>
       <form @submit.prevent="addLocus()">
@@ -76,6 +77,9 @@
         </div>
       </div>
     </div>
+    <!--create locus lists end-->
+
+    <!--create study lists begin-->
     <div>
       <h3 class="mt-5">Create a new study list</h3>
       <div>
@@ -242,6 +246,7 @@
       <br /><br />
       <input type="submit" value="Delete selected list" />
     </form>
+    <!--create study lists end-->
   </div>
 </template>
 
@@ -291,23 +296,23 @@ export default {
       this.newLocus.description = "";
       this.newLocus.image = "";
     },
+
     //submits altered locus and replaces old version with this version
     editLocus(locus) {
       this.$store.dispatch("editLocus", locus);
     },
+
     //deletes single item from current locus list
     deleteLocus(locus) {
       let id = locus.id;
       this.$store.dispatch("deleteLocus", id);
     },
+
     //deletes all items from current locus list
     clearLocuslist() {
       this.$store.dispatch("clearLocuslist");
     },
-    //submits altered study item and replaces old version with this version
-    editStudy(study) {
-      this.$store.dispatch("editStudy", study);
-    },
+
     //adds description and any images to create a new study item object with id of selected study lsit
     async addStudyitem() {
       await this.$store.dispatch("addStudyitem", {
@@ -322,6 +327,12 @@ export default {
       document.getElementById("studyimage2").value = "";
       document.getElementById("studyimage3").value = "";
     },
+
+    //submits altered study item and replaces old version with this version
+    editStudy(study) {
+      this.$store.dispatch("editStudy", study);
+    },
+
     //deletes single item from current studylist
     deleteStudy(study) {
       this.$store.dispatch("deleteStudy", {
@@ -329,11 +340,13 @@ export default {
         studyListId: this.selectStudyList,
       });
     },
+
     //creates a study list with items
     async createStudylist() {
       await this.$store.dispatch("addStudylist", this.newStudylist);
       this.newStudylist.title = "";
     },
+
     //delete any study list
     deleteStudylist() {
       let id = this.deleteStudyList;

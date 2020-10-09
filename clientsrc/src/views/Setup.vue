@@ -3,16 +3,20 @@
     <div class="row">
       <h5 class="mx-5">
         Add locus and study items to a session list by taking any slice of your
-        locus/study list and adding to the session list. Create slices by
-        choosing a starting point and then an ending point for your slice and
-        then click "add". You may add as many slices as you want in any order,
-        or add the whole list. Make sure your locus list and your study list are
-        equal in length.
+        locus list(left)/any study list(right) and joining those items within a
+        session list. Create slices by choosing a starting point and then an
+        ending point for your slice and then click "add". You may add as many
+        slices as you want in any order, or add an entire list. Make sure your
+        locus list and your study list are equal in length. In the middle, you
+        can save this session list and use it for a study session. Or choose a
+        different session list, set your preferences (or use defaults) and go to
+        a study session.
       </h5>
     </div>
+    <!--set up locus items for a study session list-->
     <div class="row justify-content-center">
       <div class="card col-4 m-2 p-2">
-        <h5>Create locus list for current study session:</h5>
+        <h5><b>Add locus items to a study session list:</b></h5>
         <div class="row justify-content-center">
           <div class="card col-10 m-2">
             <div class="card-body row justify-content-center">
@@ -94,233 +98,255 @@
           </form>
         </div>
       </div>
-      <div class="card col-3 m-2 align-items-center">
-        <div class="row">
-          <p class="m-2 p-2">Store current session list for future use:</p>
-        </div>
-        <div>
-          <form>
-            <div class="row justify-content-center">
-              <label for="studylist" class="mx-2">New Session List Title:</label
-              ><br />
-              <input
-                type="text"
-                id="studylist"
-                name="studylist"
-                v-model="newSessionlist.title"
-                class="mb-3 mx-2"
-              /><br />
-            </div>
-          </form>
-          <button
-            @click="saveNewsessionlist()"
-            type="button"
-            class="btn btn-sm border rounded btn-primary m-1"
-          >
-            Save
-          </button>
-        </div>
-        <div class="row">
-          <form>
-            <div>
-              <label for="selectsessionlist"
-                >Select a session list for study session:</label
-              >
-              <select v-model="selectSessionlist" id="sessionlist">
-                <option
-                  v-for="sessionlist in sessionlists"
-                  :sessionlist="sessionlist"
-                  :key="sessionlist.id"
-                  :value="sessionlist"
-                >
-                  {{ sessionlist.title }}
-                </option>
-              </select>
-            </div>
-          </form>
-        </div>
-        <div class="row justify-content-center mb-3">
-          <p class="m-2">
-            Selected session list: {{ selectSessionlist.title }}
-          </p>
-        </div>
-        <div class="row">
-          <button
-            type="button"
-            class="rounded border border-black btn btn-primary btn-sm m-2 mx-3 p-1"
-            data-toggle="modal"
-            data-target="#sessprefmodal"
-          >
-            <p style="font-size: 0.8rem" class="mb-0">
-              Set preferences for study session<br />
-              (can also set in session):
-            </p>
-          </button>
-        </div>
-        <!--begin modal-->
-        <div class="modal fade" id="sessprefmodal" tabindex="-1" role="dialog">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <h5 class="modal-title" id="sessprefmodal"></h5>
-              <div class="modal-body">
-                <b>Study session preferences</b>
+      <!--save list just created-->
+      <div class="col-3 mt-5">
+        <div
+          class="card col-10 m-2 align-items-center"
+          style="max-height: 20rem"
+        >
+          <div class="row">
+            <h5 class="m-2 p-2">
+              <b>Store session list just created:</b>
+            </h5>
+          </div>
+          <div>
+            <form>
+              <div class="row justify-content-center">
+                <label for="studylist" class="mx-2"
+                  >New Session List Title:</label
+                ><br />
+                <input
+                  type="text"
+                  id="studylist"
+                  name="studylist"
+                  v-model="newSessionlist.title"
+                  class="mb-3 mx-2"
+                /><br />
               </div>
+            </form>
+            <button
+              @click="saveNewsessionlist()"
+              type="button"
+              class="btn btn-sm border rounded btn-primary m-1"
+            >
+              Save
+            </button>
+          </div>
+        </div>
+        <!--choose a list for study session-->
+        <div class="card col-10 m-2 align-items-center">
+          <div class="row">
+            <h5><b>Prepare current study session:</b></h5>
+            <form>
               <div>
-                <section class="mb-2">
-                  <p style="font-size: 0.8rem" class="mb-0">
-                    <b> Review mode (continues until all answered correctly)</b>
-                  </p>
-                  <div>
-                    <div class="row ml-3">
-                      <input
-                        type="radio"
-                        v-model="reviewMode"
-                        value="true"
-                        style="margin-top: 0.185rem"
-                      />
-                      <p style="font-size: 0.8rem" class="ml-1 mb-0">on</p>
-                      <br />
+                <label for="selectsessionlist"
+                  >Select a session list for study session:</label
+                >
+                <select v-model="selectSessionlist" id="sessionlist">
+                  <option
+                    v-for="sessionlist in sessionlists"
+                    :sessionlist="sessionlist"
+                    :key="sessionlist.id"
+                    :value="sessionlist"
+                  >
+                    {{ sessionlist.title }}
+                  </option>
+                </select>
+              </div>
+            </form>
+          </div>
+          <div class="row justify-content-center mb-3">
+            <p class="m-2">
+              Selected session list: {{ selectSessionlist.title }}
+            </p>
+          </div>
+          <!--bring up modal for setting preferences for current study session-->
+          <div class="row">
+            <button
+              type="button"
+              class="rounded border border-black btn btn-primary btn-sm m-2 mx-3 p-1"
+              data-toggle="modal"
+              data-target="#sessprefmodal"
+            >
+              <p style="font-size: 0.8rem" class="mb-0">
+                Set preferences for study session<br />
+                (can also set in session):
+              </p>
+            </button>
+          </div>
+          <!--begin modal-->
+          <div
+            class="modal fade"
+            id="sessprefmodal"
+            tabindex="-1"
+            role="dialog"
+          >
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <h5 class="modal-title" id="sessprefmodal"></h5>
+                <div class="modal-body">
+                  <b>Study session preferences</b>
+                </div>
+                <div>
+                  <section class="mb-2">
+                    <p style="font-size: 0.8rem" class="mb-0">
+                      <b>
+                        Review mode (continues until all answered correctly)</b
+                      >
+                    </p>
+                    <div>
+                      <div class="row ml-3">
+                        <input
+                          type="radio"
+                          v-model="reviewMode"
+                          value="true"
+                          style="margin-top: 0.185rem"
+                        />
+                        <p style="font-size: 0.8rem" class="ml-1 mb-0">on</p>
+                        <br />
+                      </div>
+                      <div class="row ml-3">
+                        <input
+                          type="radio"
+                          v-model="reviewMode"
+                          value="false"
+                          style="margin-top: 0.185rem"
+                        />
+                        <p style="font-size: 0.8rem" class="ml-1 mb-0">off</p>
+                        <br />
+                      </div>
                     </div>
-                    <div class="row ml-3">
-                      <input
-                        type="radio"
-                        v-model="reviewMode"
-                        value="false"
-                        style="margin-top: 0.185rem"
-                      />
-                      <p style="font-size: 0.8rem" class="ml-1 mb-0">off</p>
-                      <br />
+                  </section>
+                  <section class="mb-2">
+                    <p style="font-size: 0.8rem" class="mb-0">
+                      <b>
+                        Hide study element at prompt (can toggle on/off at any
+                        time)</b
+                      >
+                    </p>
+                    <div>
+                      <div class="row ml-3">
+                        <input
+                          type="radio"
+                          v-model="hideStudyChoice"
+                          value="false"
+                          style="margin-top: 0.185rem"
+                        />
+                        <p style="font-size: 0.8rem" class="ml-1 mb-0">
+                          show study element
+                        </p>
+                        <br />
+                      </div>
+                      <div class="row ml-3">
+                        <input
+                          type="radio"
+                          v-model="hideStudyChoice"
+                          value="true"
+                          style="margin-top: 0.185rem"
+                        />
+                        <p style="font-size: 0.8rem" class="ml-1 mb-0">
+                          hide study element
+                        </p>
+                        <br />
+                      </div>
                     </div>
-                  </div>
-                </section>
-                <section class="mb-2">
-                  <p style="font-size: 0.8rem" class="mb-0">
-                    <b>
-                      Hide study element at prompt (can toggle on/off at any
-                      time)</b
-                    >
-                  </p>
-                  <div>
-                    <div class="row ml-3">
-                      <input
-                        type="radio"
-                        v-model="hideStudyChoice"
-                        value="false"
-                        style="margin-top: 0.185rem"
-                      />
-                      <p style="font-size: 0.8rem" class="ml-1 mb-0">
-                        show study element
-                      </p>
-                      <br />
+                  </section>
+                  <section>
+                    <p style="font-size: 0.8rem" class="mb-0">
+                      <b
+                        >Images (sets what images are shown when receiving
+                        question prompt; images can still be revealed at any
+                        time with button click)</b
+                      >
+                    </p>
+                    <div>
+                      <div class="row ml-3">
+                        <input
+                          type="radio"
+                          v-model="imageChoice"
+                          value="all"
+                          style="margin-top: 0.185rem"
+                        />
+                        <p style="font-size: 0.8rem" class="ml-1 mb-0">
+                          hide all images
+                        </p>
+                        <br />
+                      </div>
+                      <div class="row ml-3">
+                        <input
+                          type="radio"
+                          v-model="imageChoice"
+                          value="locus"
+                          style="margin-top: 0.185rem"
+                        />
+                        <p style="font-size: 0.8rem" class="ml-1 mb-0">
+                          hide locus image only
+                        </p>
+                        <br />
+                      </div>
+                      <div class="row ml-3">
+                        <input
+                          type="radio"
+                          v-model="imageChoice"
+                          value="study"
+                          style="margin-top: 0.185rem"
+                        />
+                        <p style="font-size: 0.8rem" class="ml-1 mb-0">
+                          hide study images only
+                        </p>
+                        <br />
+                      </div>
+                      <div class="row ml-3">
+                        <input
+                          type="radio"
+                          v-model="imageChoice"
+                          value="show"
+                          style="margin-top: 0.185rem"
+                        />
+                        <p style="font-size: 0.8rem" class="ml-1 mb-0">
+                          show all images at prompt
+                        </p>
+                        <br />
+                      </div>
                     </div>
-                    <div class="row ml-3">
-                      <input
-                        type="radio"
-                        v-model="hideStudyChoice"
-                        value="true"
-                        style="margin-top: 0.185rem"
-                      />
-                      <p style="font-size: 0.8rem" class="ml-1 mb-0">
-                        hide study element
-                      </p>
-                      <br />
-                    </div>
-                  </div>
-                </section>
-                <section>
-                  <p style="font-size: 0.8rem" class="mb-0">
-                    <b
-                      >Images (sets what images are shown when receiving
-                      question prompt; images can still be revealed at any time
-                      with button click)</b
-                    >
-                  </p>
-                  <div>
-                    <div class="row ml-3">
-                      <input
-                        type="radio"
-                        v-model="imageChoice"
-                        value="all"
-                        style="margin-top: 0.185rem"
-                      />
-                      <p style="font-size: 0.8rem" class="ml-1 mb-0">
-                        hide all images
-                      </p>
-                      <br />
-                    </div>
-                    <div class="row ml-3">
-                      <input
-                        type="radio"
-                        v-model="imageChoice"
-                        value="locus"
-                        style="margin-top: 0.185rem"
-                      />
-                      <p style="font-size: 0.8rem" class="ml-1 mb-0">
-                        hide locus image only
-                      </p>
-                      <br />
-                    </div>
-                    <div class="row ml-3">
-                      <input
-                        type="radio"
-                        v-model="imageChoice"
-                        value="study"
-                        style="margin-top: 0.185rem"
-                      />
-                      <p style="font-size: 0.8rem" class="ml-1 mb-0">
-                        hide study images only
-                      </p>
-                      <br />
-                    </div>
-                    <div class="row ml-3">
-                      <input
-                        type="radio"
-                        v-model="imageChoice"
-                        value="show"
-                        style="margin-top: 0.185rem"
-                      />
-                      <p style="font-size: 0.8rem" class="ml-1 mb-0">
-                        show all images at prompt
-                      </p>
-                      <br />
-                    </div>
-                  </div>
-                </section>
+                  </section>
+                </div>
+                <div class="row justify-content-center">
+                  <button
+                    type="button"
+                    class="col-10 btn btn-primary btn-sm my-2"
+                    data-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--end modal-->
+          <!--go to study session-->
+          <div class="row justify-content-center mt-3">
+            <div class="col-10">
+              <div class="row justify-content-center">
+                <p>Begin study session:</p>
               </div>
               <div class="row justify-content-center">
                 <button
+                  @click="goStudy()"
                   type="button"
-                  class="col-10 btn btn-primary btn-sm my-2"
+                  class="btn btn-primary btn-sm mx-4"
                   data-dismiss="modal"
                 >
-                  Close
+                  Go
                 </button>
               </div>
             </div>
           </div>
         </div>
-        <!--end modal-->
-        <div class="row justify-content-center mt-3">
-          <div class="col-10">
-            <div class="row justify-content-center">
-              <p>Begin study session:</p>
-            </div>
-            <div class="row justify-content-center">
-              <button
-                @click="goStudy()"
-                type="button"
-                class="btn btn-primary btn-sm mx-4"
-                data-dismiss="modal"
-              >
-                Go
-              </button>
-            </div>
-          </div>
-        </div>
       </div>
-
+      <!--set up study items for study sesison list-->
       <div class="card col-4 m-2 p-2">
-        <h5>Create study list for current study session:</h5>
+        <h5><b>Add study items to a study session list:</b></h5>
         <div class="row justify-content-center">
           <div class="card col-10 m-2">
             <div class="card-body row justify-content-center p-0 pt-2">
