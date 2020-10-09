@@ -138,6 +138,8 @@
               </select>
             </div>
           </form>
+        </div>
+        <div class="row justify-content-center mb-3">
           <p class="m-2">
             Selected session list: {{ selectSessionlist.title }}
           </p>
@@ -145,7 +147,7 @@
         <div class="row">
           <button
             type="button"
-            class="rounded border shadow border-black btn btn-primary btn-sm m-2 mx-3 p-1"
+            class="rounded border border-black btn btn-primary btn-sm m-2 mx-3 p-1"
             data-toggle="modal"
             data-target="#sessprefmodal"
           >
@@ -164,11 +166,74 @@
                 <b>Study session preferences</b>
               </div>
               <div>
+                <section class="mb-2">
+                  <p style="font-size: 0.8rem" class="mb-0">
+                    <b> Review mode (continues until all answered correctly)</b>
+                  </p>
+                  <div>
+                    <div class="row ml-3">
+                      <input
+                        type="radio"
+                        v-model="reviewMode"
+                        value="true"
+                        style="margin-top: 0.185rem"
+                      />
+                      <p style="font-size: 0.8rem" class="ml-1 mb-0">on</p>
+                      <br />
+                    </div>
+                    <div class="row ml-3">
+                      <input
+                        type="radio"
+                        v-model="reviewMode"
+                        value="false"
+                        style="margin-top: 0.185rem"
+                      />
+                      <p style="font-size: 0.8rem" class="ml-1 mb-0">off</p>
+                      <br />
+                    </div>
+                  </div>
+                </section>
+                <section class="mb-2">
+                  <p style="font-size: 0.8rem" class="mb-0">
+                    <b>
+                      Hide study element at prompt (can toggle on/off at any
+                      time)</b
+                    >
+                  </p>
+                  <div>
+                    <div class="row ml-3">
+                      <input
+                        type="radio"
+                        v-model="hideStudyChoice"
+                        value="false"
+                        style="margin-top: 0.185rem"
+                      />
+                      <p style="font-size: 0.8rem" class="ml-1 mb-0">
+                        show study element
+                      </p>
+                      <br />
+                    </div>
+                    <div class="row ml-3">
+                      <input
+                        type="radio"
+                        v-model="hideStudyChoice"
+                        value="true"
+                        style="margin-top: 0.185rem"
+                      />
+                      <p style="font-size: 0.8rem" class="ml-1 mb-0">
+                        hide study element
+                      </p>
+                      <br />
+                    </div>
+                  </div>
+                </section>
                 <section>
                   <p style="font-size: 0.8rem" class="mb-0">
-                    Images (sets what images are shown when receiving question
-                    prompt; images can still be revealed at any time with button
-                    click)
+                    <b
+                      >Images (sets what images are shown when receiving
+                      question prompt; images can still be revealed at any time
+                      with button click)</b
+                    >
                   </p>
                   <div>
                     <div class="row ml-3">
@@ -222,18 +287,37 @@
                   </div>
                 </section>
               </div>
+              <div class="row justify-content-center">
+                <button
+                  type="button"
+                  class="col-10 btn btn-primary btn-sm my-2"
+                  data-dismiss="modal"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--end modal-->
+        <div class="row justify-content-center mt-3">
+          <div class="col-10">
+            <div class="row justify-content-center">
+              <p>Begin study session:</p>
+            </div>
+            <div class="row justify-content-center">
               <button
+                @click="goStudy()"
                 type="button"
-                class="btn btn-primary mx-4 mb-2"
+                class="btn btn-primary btn-sm mx-4"
                 data-dismiss="modal"
               >
-                Close
+                Go
               </button>
             </div>
           </div>
         </div>
       </div>
-      <!--end modal-->
 
       <div class="card col-4 m-2 p-2">
         <h5>Create study list for current study session:</h5>
@@ -350,7 +434,9 @@ export default {
   },
   data() {
     return {
+      reviewMode: false,
       imageChoice: "show",
+      hideStudyChoice: false,
       selectLocusstart: 0,
       selectLocusend: 0,
       selectStudystart: 0,
@@ -500,6 +586,15 @@ export default {
     deleteStudylist() {
       let id = this.deleteStudyList;
       this.$store.dispatch("deleteStudylist", id);
+    },
+    //sends preferences and begins study session
+    goStudy() {
+      this.$store.dispatch("setPrefs", {
+        reviewMode: this.reviewMode,
+        imageChoice: this.imageChoice,
+        hideStudyChoice: this.hideStudyChoice,
+      });
+      this.$router.push({ name: "study", path: "/study" });
     },
   },
 };

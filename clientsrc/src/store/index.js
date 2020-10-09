@@ -18,7 +18,8 @@ export default new Vuex.Store({
     sessionlocuslist: [],
     sessionstudylist: [],
     sessionlists: [],
-    activesessionlist: []
+    activesessionlist: [],
+    prefs: {}
   },
   mutations: {
     setUser(state, user) {
@@ -47,6 +48,9 @@ export default new Vuex.Store({
     },
     setActivesession(state, activesessionlist) {
       state.activesessionlist = activesessionlist
+    },
+    setPrefs(state, prefs) {
+      state.prefs = prefs
     }
   },
   actions: {
@@ -199,6 +203,10 @@ export default new Vuex.Store({
       api.post('sessionlists', list).then(server => {
         dispatch('getSessionlists')
       })
+    },
+    setPrefs({ commit, state }, prefs) {
+      commit('setPrefs', prefs)
+      console.log(state.prefs)
     }
   }
 })
