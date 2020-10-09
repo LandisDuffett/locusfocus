@@ -187,6 +187,14 @@ export default new Vuex.Store({
       let list = [...state.sessionstudylist, ...data]
       commit('setSessionstudy', list)
     },
+    clearSeshlocuslist({ commit, state }) {
+      let list = []
+      commit('setSessionlocus', list)
+    },
+    clearStudylist({ commit, state }) {
+      let list = []
+      commit('setSessionstudy', list)
+    },
     createSessionlist({ dispatch, state }, list) {
       api.post('sessionlists', list).then(server => {
         dispatch('getSessionlists')

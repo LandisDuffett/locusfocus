@@ -63,7 +63,6 @@
             </div>
           </div>
         </div>
-
         <div>
           <form>
             <div class="row justify-content-center">
@@ -83,6 +82,13 @@
                     </li>
                   </ol>
                 </div>
+                <button
+                  @click="clearLocuslist()"
+                  type="button"
+                  class="col-12 btn btn-xs border rounded btn-primary mb-2"
+                >
+                  clear
+                </button>
               </div>
             </div>
           </form>
@@ -137,19 +143,98 @@
           </p>
         </div>
         <div class="row">
-          <p class="m-2 p-2">
-            Set preferences for study session (can also set in session):
-          </p>
-        </div>
-        <div>
           <button
             type="button"
-            class="btn btn-sm border rounded btn-primary m-1"
+            class="rounded border shadow border-black btn btn-primary btn-sm m-2 mx-3 p-1"
+            data-toggle="modal"
+            data-target="#sessprefmodal"
           >
-            Study
+            <p style="font-size: 0.8rem" class="mb-0">
+              Set preferences for study session<br />
+              (can also set in session):
+            </p>
           </button>
         </div>
+        <!--begin modal-->
+        <div class="modal fade" id="sessprefmodal" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <h5 class="modal-title" id="sessprefmodal"></h5>
+              <div class="modal-body">
+                <b>Study session preferences</b>
+              </div>
+              <div>
+                <section>
+                  <p style="font-size: 0.8rem" class="mb-0">
+                    Images (sets what images are shown when receiving question
+                    prompt; images can still be revealed at any time with button
+                    click)
+                  </p>
+                  <div>
+                    <div class="row ml-3">
+                      <input
+                        type="radio"
+                        v-model="imageChoice"
+                        value="all"
+                        style="margin-top: 0.185rem"
+                      />
+                      <p style="font-size: 0.8rem" class="ml-1 mb-0">
+                        hide all images
+                      </p>
+                      <br />
+                    </div>
+                    <div class="row ml-3">
+                      <input
+                        type="radio"
+                        v-model="imageChoice"
+                        value="locus"
+                        style="margin-top: 0.185rem"
+                      />
+                      <p style="font-size: 0.8rem" class="ml-1 mb-0">
+                        hide locus image only
+                      </p>
+                      <br />
+                    </div>
+                    <div class="row ml-3">
+                      <input
+                        type="radio"
+                        v-model="imageChoice"
+                        value="study"
+                        style="margin-top: 0.185rem"
+                      />
+                      <p style="font-size: 0.8rem" class="ml-1 mb-0">
+                        hide study images only
+                      </p>
+                      <br />
+                    </div>
+                    <div class="row ml-3">
+                      <input
+                        type="radio"
+                        v-model="imageChoice"
+                        value="show"
+                        style="margin-top: 0.185rem"
+                      />
+                      <p style="font-size: 0.8rem" class="ml-1 mb-0">
+                        show all images at prompt
+                      </p>
+                      <br />
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <button
+                type="button"
+                class="btn btn-primary mx-4 mb-2"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
+      <!--end modal-->
+
       <div class="card col-4 m-2 p-2">
         <h5>Create study list for current study session:</h5>
         <div class="row justify-content-center">
@@ -237,6 +322,13 @@
                       </li>
                     </ol>
                   </div>
+                  <button
+                    @click="clearStudylist()"
+                    type="button"
+                    class="col-12 btn btn-xs border rounded btn-primary mb-2"
+                  >
+                    clear
+                  </button>
                 </div>
               </div>
             </form>
@@ -258,6 +350,7 @@ export default {
   },
   data() {
     return {
+      imageChoice: "show",
       selectLocusstart: 0,
       selectLocusend: 0,
       selectStudystart: 0,
@@ -356,6 +449,14 @@ export default {
     activeSessionlist() {
       this.$store.dispatch("getActivesessionlist", this.selectSessionlist.id);
     },
+    //clears selected locus items from field but does not delete
+    clearLocuslist() {
+      this.$store.dispatch("clearSeshlocuslist");
+    },
+    //clears selected study items from field but does not delete
+    clearStudylist() {
+      this.$store.dispatch("clearStudylist");
+    },
     //takes each new locus item and adds it to array of items in user's single locus list
     addLocus() {
       this.$store.dispatch("addLocus", {
@@ -364,10 +465,6 @@ export default {
       });
       this.newLocus.description = "";
       this.newLocus.image = "";
-    },
-    //deletes all items from current locus list
-    clearLocuslist() {
-      this.$store.dispatch("clearLocuslist");
     },
     //submits altered study item and replaces old version with this version
     editStudy(study) {
