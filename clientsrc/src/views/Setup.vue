@@ -88,7 +88,68 @@
           </form>
         </div>
       </div>
-      <div class="card col-3 m-2"></div>
+      <div class="card col-3 m-2 align-items-center">
+        <div class="row">
+          <p class="m-2 p-2">Store current session list for future use:</p>
+        </div>
+        <div>
+          <form>
+            <div class="row justify-content-center">
+              <label for="studylist" class="mx-2">New Session List Title:</label
+              ><br />
+              <input
+                type="text"
+                id="studylist"
+                name="studylist"
+                v-model="newSessionlist.title"
+                class="mb-3 mx-2"
+              /><br />
+            </div>
+          </form>
+          <button
+            @click="saveNewsessionlist()"
+            type="button"
+            class="btn btn-sm border rounded btn-primary m-1"
+          >
+            Save
+          </button>
+        </div>
+        <div class="row">
+          <form>
+            <div>
+              <label for="selectsessionlist"
+                >Select a session list for study session:</label
+              >
+              <select v-model="selectSessionlist" id="sessionlist">
+                <option
+                  v-for="sessionlist in sessionlists"
+                  :sessionlist="sessionlist"
+                  :key="sessionlist.id"
+                  :value="sessionlist"
+                >
+                  {{ sessionlist.title }}
+                </option>
+              </select>
+            </div>
+          </form>
+          <p class="m-2">
+            Selected session list: {{ selectSessionlist.title }}
+          </p>
+        </div>
+        <div class="row">
+          <p class="m-2 p-2">
+            Set preferences for study session (can also set in session):
+          </p>
+        </div>
+        <div>
+          <button
+            type="button"
+            class="btn btn-sm border rounded btn-primary m-1"
+          >
+            Study
+          </button>
+        </div>
+      </div>
       <div class="card col-4 m-2 p-2">
         <h5>Create study list for current study session:</h5>
         <div class="row justify-content-center">
@@ -158,25 +219,27 @@
             </div>
           </div>
           <div>
-              <form>
-                <div class="row justify-content-center">
-                  <div class="card col-8 m-2">
-                    <p class="mt-2">Study items in current session list:</p>
-                    <div class="card-mb-2" style="overflow-y: scroll; height: 10rem">
-                      <ol>
-                        <li
-                          v-for="study in sessionstudy"
-                          :study="study"
-                          :key="study.id"
-                        >
-                          {{ study.title }}
-                        </li>
-                      </ol>
-                    </div>
+            <form>
+              <div class="row justify-content-center">
+                <div class="card col-8 m-2">
+                  <p class="mt-2">Study items in current session list:</p>
+                  <div
+                    class="card-mb-2"
+                    style="overflow-y: scroll; height: 10rem"
+                  >
+                    <ol>
+                      <li
+                        v-for="study in sessionstudy"
+                        :study="study"
+                        :key="study.id"
+                      >
+                        {{ study.title }}
+                      </li>
+                    </ol>
                   </div>
                 </div>
-              </form>
-            </div>
+              </div>
+            </form>
           </div>
         </div>
       </div>
@@ -191,6 +254,7 @@ export default {
     this.$store.dispatch("getStudylists");
     this.$store.dispatch("getStudyitems");
     this.$store.dispatch("getLoci");
+    this.$store.dispatch("getSessionlists");
   },
   data() {
     return {
@@ -198,12 +262,17 @@ export default {
       selectLocusend: 0,
       selectStudystart: 0,
       selectStudyend: 0,
+      selectSessionlist: {},
       newStudylist: {
         title: "",
       },
       newLocus: {
         description: "",
         image: "",
+      },
+      newSessionlist: {
+        title: "",
+        pairs: [],
       },
       deleteStudyList: 0,
       selectStudyList: "",
@@ -218,6 +287,9 @@ export default {
     },
     sessionstudy() {
       return this.$store.state.sessionstudylist;
+    },
+    sessionlists() {
+      return this.$store.state.sessionlists;
     },
     studylists() {
       return this.$store.state.studylists;
@@ -235,9 +307,9 @@ export default {
     createLocusslice() {
       let start = this.loci.findIndex((l) => l._id == this.selectLocusstart);
       let end = this.loci.findIndex((l) => l._id == this.selectLocusend) + 1;
-      if (!start && end) {
+      if (!start && start != 0 && end) {
         start = end - 1;
-      } else if (!end && start) {
+      } else if (!end && end != 0 && start) {
         end = start + 1;
       }
       let slice = this.loci.slice(start, end);
@@ -252,15 +324,37 @@ export default {
       let end =
         this.currentStudyitems.findIndex((s) => s._id == this.selectStudyend) +
         1;
-      if (!start && end) {
+      if (!start && start != 0 && end) {
         start = end - 1;
-      } else if (!end && start) {
+      } else if (!end && end != 0 && start) {
         end = start + 1;
       }
       let slice = this.currentStudyitems.slice(start, end);
       this.$store.dispatch("setSeshstudylist", slice);
       this.selectStudystart = 0;
       this.selectStudyend = 0;
+    },
+    //joins current locus list and study list to create a session list
+    saveNewsessionlist() {
+      let pairs = [];
+      let obj = {};
+      for (let i = 0; i < this.sessionlocus.length; i++) {
+        obj.locus = this.sessionlocus[i];
+        obj.study = this.sessionstudy[i];
+        console.log(obj);
+        console.log(obj.study);
+        pairs.push(obj);
+        console.log(pairs);
+        obj = {};
+      }
+      this.newSessionlist.pairs = pairs;
+      console.log(pairs);
+      console.log(this.newSessionlist.pairs);
+      this.$store.dispatch("createSessionlist", this.newSessionlist);
+    },
+    //sets selected session list to active session list for upcoming study session
+    activeSessionlist() {
+      this.$store.dispatch("getActivesessionlist", this.selectSessionlist.id);
     },
     //takes each new locus item and adds it to array of items in user's single locus list
     addLocus() {

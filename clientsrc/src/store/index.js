@@ -16,7 +16,9 @@ export default new Vuex.Store({
     studyitems: [],
     currentstudyitems: [],
     sessionlocuslist: [],
-    sessionstudylist: []
+    sessionstudylist: [],
+    sessionlists: [],
+    activesessionlist: []
   },
   mutations: {
     setUser(state, user) {
@@ -39,6 +41,12 @@ export default new Vuex.Store({
     },
     setSessionstudy(state, sessionstudylist) {
       state.sessionstudylist = sessionstudylist
+    },
+    setSessionlists(state, sessionlists) {
+      state.sessionlists = sessionlists
+    },
+    setActivesession(state, activesessionlist) {
+      state.activesessionlist = activesessionlist
     }
   },
   actions: {
@@ -161,6 +169,16 @@ export default new Vuex.Store({
     //#endregion
 
     //#region: session
+    getSessionlists({ commit }) {
+      api.get('sessionlists').then(res => {
+        commit('setSessionlists', res.data)
+      })
+    },
+    getActivesessionlist({ commit }, id) {
+      api.get('sessionlists', id).then(res => {
+        commit('setActivesession', res.data)
+      })
+    },
     setSeshlocuslist({ commit, state }, data) {
       let list = [...state.sessionlocuslist, ...data]
       commit('setSessionlocus', list)
@@ -168,6 +186,11 @@ export default new Vuex.Store({
     setSeshstudylist({ commit, state }, data) {
       let list = [...state.sessionstudylist, ...data]
       commit('setSessionstudy', list)
+    },
+    createSessionlist({ dispatch, state }, list) {
+      api.post('sessionlists', list).then(server => {
+        dispatch('getSessionlists')
+      })
     }
   }
 })
