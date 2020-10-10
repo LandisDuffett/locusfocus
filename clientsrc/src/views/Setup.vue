@@ -111,16 +111,14 @@
           </div>
           <div>
             <form>
-              <div class="row justify-content-center">
-                <label for="studylist" class="mx-2"
-                  >New Session List Title:</label
-                ><br />
+              <div>
+                <label for="studylist">New Session List Title:</label><br />
                 <input
                   type="text"
                   id="studylist"
                   name="studylist"
                   v-model="newSessionlist.title"
-                  class="mb-3 mx-2"
+                  class="mb-3 mx-3"
                 /><br />
               </div>
             </form>
@@ -334,7 +332,7 @@
                 <button
                   @click="goStudy()"
                   type="button"
-                  class="btn btn-primary btn-sm mx-4"
+                  class="btn btn-primary btn-sm mx-4 mb-2"
                   data-dismiss="modal"
                 >
                   Go
@@ -620,6 +618,7 @@ export default {
         imageChoice: this.imageChoice,
         hideStudyChoice: this.hideStudyChoice,
       });
+      this.activeSessionlist();
       this.$router.push({ name: "study", path: "/study" });
     },
   },

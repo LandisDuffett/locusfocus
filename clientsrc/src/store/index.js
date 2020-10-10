@@ -19,7 +19,8 @@ export default new Vuex.Store({
     sessionstudylist: [],
     sessionlists: [],
     activesessionlist: [],
-    prefs: {}
+    prefs: {},
+    sessionIndex: 0,
   },
   mutations: {
     setUser(state, user) {
@@ -51,6 +52,9 @@ export default new Vuex.Store({
     },
     setPrefs(state, prefs) {
       state.prefs = prefs
+    },
+    setSessionindex(state, index) {
+      state.sessionIndex = index
     }
   },
   actions: {
@@ -179,7 +183,7 @@ export default new Vuex.Store({
       })
     },
     getActivesessionlist({ commit }, id) {
-      api.get('sessionlists', id).then(res => {
+      api.get('sessionlists/' + id).then(res => {
         commit('setActivesession', res.data)
       })
     },
@@ -206,7 +210,13 @@ export default new Vuex.Store({
     },
     setPrefs({ commit, state }, prefs) {
       commit('setPrefs', prefs)
-      console.log(state.prefs)
+    },
+    advance({ commit, state }) {
+      let ind = state.sessionIndex + 1;
+      commit('setSessionindex', ind)
+    },
+    reset({ commit, state }) {
+      commit('setSessionindex', 0)
     }
   }
 })
