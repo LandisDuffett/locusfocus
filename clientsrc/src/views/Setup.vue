@@ -455,6 +455,8 @@ export default {
     this.$store.dispatch("getStudyitems");
     this.$store.dispatch("getLoci");
     this.$store.dispatch("getSessionlists");
+    this.$store.dispatch("clearSeshlocuslist");
+    this.$store.dispatch("clearStudylist");
   },
   data() {
     return {
