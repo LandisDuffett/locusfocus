@@ -215,8 +215,13 @@ export default new Vuex.Store({
       let ind = state.sessionIndex + 1;
       commit('setSessionindex', ind)
     },
-    reset({ commit, state }) {
+    reset({ commit }) {
       commit('setSessionindex', 0)
+    },
+    deleteSession({ dispatch }, id) {
+      api.delete('sessionlists/' + id).then(server => {
+        dispatch('getSessionlists')
+      })
     }
   }
 })

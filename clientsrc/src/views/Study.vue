@@ -2,7 +2,7 @@
   <div class="study">
     <div>
       <div class="card-body row justify-content-center">
-        <div class="col-4 card mx-2">
+        <div class="col-3 card mx-2">
           <div>{{ sessionlist[sessionindex].locus.description }}</div>
           <br />
           <div>
@@ -13,8 +13,8 @@
             />
           </div>
         </div>
-        <div class="col-3 card mx-2"></div>
-        <div class="col-4 card mx-2">
+        <div class="col-2 card mx-2"></div>
+        <div class="col-6 card mx-2">
           <div>{{ sessionlist[sessionindex].study.title }}</div>
           <div class="row">
             <span

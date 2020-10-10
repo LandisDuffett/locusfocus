@@ -86,6 +86,12 @@
                     </li>
                   </ol>
                 </div>
+                <p class="mt-2">
+                  Number of locus items in current study session list:
+                </p>
+                <div>
+                  {{ locuslength }}
+                </div>
                 <button
                   @click="clearLocuslist()"
                   type="button"
@@ -100,16 +106,13 @@
       </div>
       <!--save list just created-->
       <div class="col-3 mt-5">
-        <div
-          class="card col-10 m-2 align-items-center"
-          style="max-height: 20rem"
-        >
+        <div class="card col-10 m-2 ml-3 align-items-center">
           <div class="row">
             <h5 class="m-2 p-2">
               <b>Store session list just created:</b>
             </h5>
           </div>
-          <div>
+          <div class="row justify-content-center">
             <form>
               <div>
                 <label for="studylist">New Session List Title:</label><br />
@@ -118,21 +121,56 @@
                   id="studylist"
                   name="studylist"
                   v-model="newSessionlist.title"
-                  class="mb-3 mx-3"
+                  class="col-10 mb-3 mx-3"
                 /><br />
               </div>
             </form>
-            <button
-              @click="saveNewsessionlist()"
-              type="button"
-              class="btn btn-sm border rounded btn-primary m-1"
-            >
-              Save
-            </button>
+            <div>
+              <button
+                @click="saveNewsessionlist()"
+                type="button"
+                class="btn btn-sm border rounded btn-primary m-1"
+              >
+                Save
+              </button>
+            </div>
+          </div>
+          <div class="row">
+            <h5 class="m-2 p-2">
+              <b>Delete any session list:</b>
+            </h5>
+          </div>
+          <div>
+            <form>
+              <div>
+                <label for="selectsessionlist"
+                  >Select a session list to delete:</label
+                >
+                <select v-model="deleteSession" id="sessionlist">
+                  <option
+                    v-for="sessionlist in sessionlists"
+                    :sessionlist="sessionlist"
+                    :key="sessionlist.id"
+                    :value="sessionlist.id"
+                  >
+                    {{ sessionlist.title }}
+                  </option>
+                </select>
+              </div>
+            </form>
+            <div class="row justify-content-center">
+              <button
+                @click="deleteSessionlist()"
+                type="button"
+                class="btn btn-sm border rounded btn-primary m-2"
+              >
+                Delete
+              </button>
+            </div>
           </div>
         </div>
         <!--choose a list for study session-->
-        <div class="card col-10 m-2 align-items-center">
+        <div class="card col-10 m-2 ml-3 align-items-center">
           <div class="row">
             <h5><b>Prepare current study session:</b></h5>
             <form>
@@ -386,7 +424,7 @@
               <div class="card col-11 m-2 p-2">
                 <form>
                   <label for="studyend"
-                    >Select the last item in the "slice" of loci:</label
+                    >Select the last item in the "slice" of study items:</label
                   >
                   <select v-model="selectStudyend" id="studyend">
                     <option
@@ -430,6 +468,12 @@
                       </li>
                     </ol>
                   </div>
+                  <p class="mt-2">
+                    Number of study items in current study session list:
+                  </p>
+                  <div>
+                    {{ studylength }}
+                  </div>
                   <button
                     @click="clearStudylist()"
                     type="button"
@@ -468,6 +512,7 @@ export default {
       selectStudystart: 0,
       selectStudyend: 0,
       selectSessionlist: {},
+      deleteSession: 0,
       newStudylist: {
         title: "",
       },
@@ -490,8 +535,16 @@ export default {
     sessionlocus() {
       return this.$store.state.sessionlocuslist;
     },
+    locuslength() {
+      let length = this.sessionlocus.length;
+      return length;
+    },
     sessionstudy() {
       return this.$store.state.sessionstudylist;
+    },
+    studylength() {
+      let length = this.sessionstudy.length;
+      return length;
     },
     sessionlists() {
       return this.$store.state.sessionlists;
@@ -622,6 +675,11 @@ export default {
       });
       this.activeSessionlist();
       this.$router.push({ name: "study", path: "/study" });
+    },
+    //permanently deletes any session list
+    deleteSessionlist() {
+      let id = this.deleteSession;
+      this.$store.dispatch("deleteSession", id);
     },
   },
 };
