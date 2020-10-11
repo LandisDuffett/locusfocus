@@ -19,7 +19,6 @@ export default new Vuex.Store({
     sessionstudylist: [],
     sessionlists: [],
     activesessionlist: [],
-    prefs: {},
     sessionIndex: 0,
   },
   mutations: {
@@ -49,9 +48,6 @@ export default new Vuex.Store({
     },
     setActivesession(state, activesessionlist) {
       state.activesessionlist = activesessionlist
-    },
-    setPrefs(state, prefs) {
-      state.prefs = prefs
     },
     setSessionindex(state, index) {
       state.sessionIndex = index
@@ -153,12 +149,10 @@ export default new Vuex.Store({
 
     async editStudy({ dispatch }, data) {
       try {
-        let res = await api.put('studyitems/' + data.id, data).then(res => {
-          dispatch('getCurrentstudy', data.id)
-        })
+        await api.put('studyitems/' + data.id, data)
+        dispatch('getCurrentstudy', data.id)
       } catch (error) {
         console.error(error)
-        alert("You may not edit another person's loci.")
       }
     },
 
@@ -207,9 +201,6 @@ export default new Vuex.Store({
       api.post('sessionlists', list).then(server => {
         dispatch('getSessionlists')
       })
-    },
-    setPrefs({ commit, state }, prefs) {
-      commit('setPrefs', prefs)
     },
     advance({ commit, state }) {
       let ind = state.sessionIndex + 1;

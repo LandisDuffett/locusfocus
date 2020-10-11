@@ -165,6 +165,13 @@
                   :key="item.id"
                 >
                   <div class="row justify-content-center mb-2">
+                    <button
+                      @click="deleteStudy(item)"
+                      type="button"
+                      class="row btn btn-xs border rounded btn-primary mr-3 p-1"
+                    >
+                      delete
+                    </button>
                     <h4 class="d-flex align-items-center">text:</h4>
                     <textarea
                       type="text"
@@ -174,6 +181,15 @@
                       v-model.lazy="item.title"
                       required
                     />
+                  </div>
+                  <div class="row justify-content-center">
+                    <button
+                      @click="editStudy(item)"
+                      type="button"
+                      class="row btn btn-xs border rounded btn-primary m-1 p-2"
+                    >
+                      edit text
+                    </button>
                   </div>
                   <div class="row justify-content-center">
                     <h4 class="d-flex align-items-center">image 1:</h4>
@@ -186,6 +202,15 @@
                       required
                     />
                   </div>
+                  <div class="row justify-content-center">
+                    <button
+                      @click="editStudy(item)"
+                      type="button"
+                      class="row btn btn-xs border rounded btn-primary m-1 p-2"
+                    >
+                      edit image 1
+                    </button>
+                  </div>
                   <div class="row justify-content-center mb-1">
                     <h4 class="d-flex align-items-center">image 2:</h4>
                     <textarea
@@ -196,6 +221,15 @@
                       v-model.lazy="item.imgURL2"
                       required
                     />
+                  </div>
+                  <div class="row justify-content-center">
+                    <button
+                      @click="editStudy(item)"
+                      type="button"
+                      class="row btn btn-xs border rounded btn-primary m-1 p-2"
+                    >
+                      edit image 2
+                    </button>
                   </div>
                   <div class="row justify-content-center mb-1">
                     <h4 class="d-flex align-items-center">image 3:</h4>
@@ -214,14 +248,7 @@
                       type="button"
                       class="row btn btn-xs border rounded btn-primary m-1 p-2"
                     >
-                      submit edit
-                    </button>
-                    <button
-                      @click="deleteStudy(item)"
-                      type="button"
-                      class="row btn btn-xs border rounded btn-primary m-1 p-2"
-                    >
-                      delete item from list
+                      edit image 3
                     </button>
                   </div>
                 </li>
