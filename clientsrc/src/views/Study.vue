@@ -2,7 +2,7 @@
   <div class="study">
     <div>
       <div class="card-body row">
-        <div v-show="!reviewMode" v-if="begin" class="col-4 card mx-2">
+        <div v-show="!realReviewmode" v-if="begin" class="col-4 card mx-2">
           <div class="mt-5">
             {{ sessionlist[sessionindex].locus.description }}
           </div>
@@ -15,21 +15,21 @@
             />
           </div>
         </div>
-        <div v-if="begin" v-show="reviewMode" class="col-4 card mx-2">
+        <div v-if="realReviewmode && begin" class="col-4 card mx-2">
           <div class="mt-5">
-            {{ sessionlist[sessionindex].locus.description }}
+            {{ reviewlist[sessionindex].locus.description }}
           </div>
           <br />
           <div v-if="showLocusImage" class="mb-5">
             <img
-              :src="sessionlist[sessionindex].locus.image"
+              :src="reviewlist[sessionindex].locus.image"
               alt
               style="max-width: 8rem"
             />
           </div>
         </div>
         <div
-          v-if="begin && !reviewMode"
+          v-if="begin && !realReviewmode"
           v-show="showStudy"
           class="col-7 card mx-2"
         >
@@ -58,29 +58,29 @@
           </div>
         </div>
         <div
-          v-if="begin && reviewMode"
+          v-if="begin && realReviewmode"
           v-show="showStudy"
           class="col-7 card mx-2"
         >
           <div class="mt-5">
-            {{ sessionlist[sessionindex].study.title }}
+            {{ reviewlist[sessionindex].study.title }}
           </div>
           <div v-if="showStudyImage" class="mt-3 row justify-content-center">
             <span class="m-2"
               ><img
-                :src="sessionlist[sessionindex].study.imgURL1"
+                :src="reviewlist[sessionindex].study.imgURL1"
                 alt
                 style="max-width: 8rem"
             /></span>
             <span class="m-2"
               ><img
-                :src="sessionlist[sessionindex].study.imgURL2"
+                :src="reviewlist[sessionindex].study.imgURL2"
                 alt
                 style="max-width: 8rem"
             /></span>
             <span class="m-2"
               ><img
-                :src="sessionlist[sessionindex].study.imgURL3"
+                :src="reviewlist[sessionindex].study.imgURL3"
                 alt
                 style="max-width: 8rem"
             /></span>
@@ -218,13 +218,6 @@
             >
               reset
             </button>
-            <button
-              @click="repeat()"
-              type="button"
-              class="btn mx-2 btn-sm border rounded btn-primary mb-2"
-            >
-              repeat
-            </button>
           </div>
           <div v-show="reviewMode" class="row justify-content-center">
             <button
@@ -242,7 +235,7 @@
               wrong
             </button>
           </div>
-          <div class="row justify-content-center">
+          <div v-show="!reviewMode" class="row justify-content-center">
             <button
               @click="next()"
               type="button"
@@ -267,6 +260,8 @@ export default {
   data() {
     return {
       reviewMode: false,
+      realReviewmode: false,
+      reviewItems: [],
       showStudy: true,
       showLocusImage: true,
       showStudyImage: true,
@@ -281,24 +276,74 @@ export default {
     sessionindex() {
       return this.$store.state.sessionIndex;
     },
+    reviewlist() {
+      return this.reviewItems;
+    },
   },
   methods: {
     next() {
-      this.$store.dispatch("advance");
+      if (this.sessionindex == this.sessionlist.length - 1) {
+        alert("You have finished the list! Click reset to go again");
+      } else {
+        this.$store.dispatch("advance");
+      }
     },
     start() {
       this.begin = true;
+      this.$store.dispatch();
     },
     reset() {
       this.begin = false;
       this.reviewMode = false;
+      this.realReviewmode = false;
+      this.reviewItems = [];
       this.$store.dispatch("reset");
     },
     right() {
-      this.$store.dispatch("advance");
+      if (this.realReviewmode && this.reviewlist.length == 1) {
+        this.reviewItems.splice(this.sessionindex, 1);
+        alert("You have finished this list! Click reset to go again.");
+      }
+      if (
+        !this.realReviewmode &&
+        this.sessionindex == this.sessionlist.length - 1
+      ) {
+        this.realReviewmode = true;
+        this.$store.dispatch("reset");
+      } else if (
+        this.realReviewmode &&
+        (this.sessionindex == this.reviewlist.length - 2 ||
+          this.sessionindex == this.reviewlist.length - 1)
+      ) {
+        this.reviewItems.splice(this.sessionindex, 1);
+        this.$store.dispatch("reset");
+      } else if (this.realReviewmode) {
+        this.reviewItems.splice(this.sessionindex, 1);
+        this.$store.dispatch("advance");
+      } else {
+        this.$store.dispatch("advance");
+      }
     },
     wrong() {
-      this.$store.dispatch("addToReview");
+      let wrongItem = this.sessionlist[this.sessionindex];
+      if (
+        !this.realReviewmode &&
+        this.sessionindex == this.sessionlist.length - 1
+      ) {
+        this.realReviewmode = true;
+        this.$store.dispatch("reset");
+        this.reviewItems.push(wrongItem);
+      } else if (
+        this.realReviewmode &&
+        this.sessionindex == this.reviewlist.length - 1
+      ) {
+        this.$store.dispatch("reset");
+      } else if (this.realReviewmode) {
+        this.$store.dispatch("advance");
+      } else {
+        this.reviewItems.push(wrongItem);
+        this.$store.dispatch("advance");
+      }
     },
   },
   components: {},

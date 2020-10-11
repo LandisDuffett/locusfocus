@@ -52,6 +52,9 @@ export default new Vuex.Store({
     },
     setSessionindex(state, index) {
       state.sessionIndex = index
+    },
+    setReviewlist(state, item) {
+      state.reviewlist = item
     }
   },
   actions: {
@@ -214,6 +217,14 @@ export default new Vuex.Store({
       api.delete('sessionlists/' + id).then(server => {
         dispatch('getSessionlists')
       })
+    },
+    addToReview({ commit, state }, item) {
+      let list = state.reviewlist.push(item)
+      commit('setReviewlist', list)
+    },
+    resetReview({ commit, state }) {
+      let list = {}
+      commit('setReviewlist', list)
     }
   }
 })
