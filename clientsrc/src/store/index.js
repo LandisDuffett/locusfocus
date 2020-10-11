@@ -20,6 +20,7 @@ export default new Vuex.Store({
     sessionlists: [],
     activesessionlist: [],
     sessionIndex: 0,
+    reviewlist: []
   },
   mutations: {
     setUser(state, user) {
