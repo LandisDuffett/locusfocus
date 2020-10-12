@@ -7,6 +7,7 @@
 
 <script>
 import Navbar from "./components/Navbar";
+import swal from "sweetalert";
 import { onAuth } from "@bcwdev/auth0-vue";
 export default {
   name: "App",
@@ -20,8 +21,8 @@ export default {
     }
   },
   components: {
-    Navbar
-  }
+    Navbar,
+  },
 };
 </script>
 

@@ -2,11 +2,12 @@
   <div class="create">
     <!--create locus lists begin-->
     <div>
-      <h3>Add item to your locus list:</h3>
+      <h2 class="newfontnosize" style="color: teal">Your Locus List</h2>
+      <h3 class="p-2">Add item to your locus list:</h3>
       <form @submit.prevent="addLocus()">
         <input
           type="text"
-          placeholder="describe location"
+          placeholder="location"
           v-model="newLocus.description"
           required
         />
@@ -18,16 +19,16 @@
         <button type="submit">Add</button>
       </form>
       <div class="container">
-        <h3 class="mt-2">Edit items in your locus list:</h3>
+        <h3 class="mt-2 p-2">Edit items in your locus list:</h3>
         <form>
-          <div class="card">
+          <div class="card rounded boxborder">
             <div class="card-body" style="overflow-y: scroll; height: 10rem">
               <ol>
                 <li v-for="locus in loci" :locus="locus" :key="locus.id">
                   <div class="row justify-content-center mb-2">
                     <textarea
                       type="text"
-                      class="form-control col-5 m-1"
+                      class="form-control col-5 m-1 boxborder rounded"
                       name="locusdescription"
                       id="locusdescription"
                       v-model.lazy="locus.description"
@@ -35,7 +36,7 @@
                     />
                     <textarea
                       type="text"
-                      class="form-control col-5 m-1"
+                      class="form-control col-5 m-1 boxborder rounded"
                       name="locusimage"
                       id="locusimage"
                       v-model.lazy="locus.image"
@@ -78,10 +79,11 @@
       </div>
     </div>
     <!--create locus lists end-->
-
+    <hr class="divider" />
     <!--create study lists begin-->
     <div>
-      <h3 class="mt-5">Create a new study list</h3>
+      <h2 class="newfontnosize" style="color: indigo">Your Study Lists</h2>
+      <h3 class="mt-2 p-2">Create a new study list</h3>
       <div>
         <form @submit.prevent="createStudylist()">
           <div class="row justify-content-center">
@@ -157,7 +159,10 @@
         <p>Edit items in your study list:</p>
         <form>
           <div class="card">
-            <div class="card-body" style="overflow-y: scroll; height: 10rem">
+            <div
+              class="card-body boxborder rounded"
+              style="overflow-y: scroll; height: 10rem"
+            >
               <ol>
                 <li
                   v-for="item in currentStudyitems"
@@ -168,14 +173,15 @@
                     <button
                       @click="deleteStudy(item)"
                       type="button"
-                      class="row btn btn-xs border rounded btn-primary mr-3 p-1"
+                      class="row btn btn-xs border rounded btn-primary mr-5 p-1 mt-2"
+                      style="max-height: 2rem"
                     >
                       delete
                     </button>
                     <h4 class="d-flex align-items-center">text:</h4>
                     <textarea
                       type="text"
-                      class="form-control col-8 m-1"
+                      class="form-control col-8 m-1 boxborder rounded"
                       name="studyitemtitle"
                       id="studyitemtitle"
                       v-model.lazy="item.title"
@@ -195,7 +201,7 @@
                     <h4 class="d-flex align-items-center">image 1:</h4>
                     <textarea
                       type="text"
-                      class="form-control col-8 m-1"
+                      class="form-control col-8 m-1 boxborder rounded"
                       name="studyitemimage"
                       id="studyitemimage"
                       v-model.lazy="item.imgURL1"
@@ -215,7 +221,7 @@
                     <h4 class="d-flex align-items-center">image 2:</h4>
                     <textarea
                       type="text"
-                      class="form-control col-8 m-1"
+                      class="form-control col-8 m-1 boxborder rounded"
                       name="studyitemimage"
                       id="studyitemimage"
                       v-model.lazy="item.imgURL2"
@@ -235,7 +241,7 @@
                     <h4 class="d-flex align-items-center">image 3:</h4>
                     <textarea
                       type="text"
-                      class="form-control col-8 m-1"
+                      class="form-control col-8 m-1 boxborder rounded"
                       name="studyitemimage"
                       id="studyitemimage"
                       v-model.lazy="item.imgURL3"
@@ -259,7 +265,9 @@
       </div>
     </div>
     <form @submit.prevent="deleteStudylist()">
-      <label for="activestudy">Select a list to delete:</label>
+      <label for="activestudy" class="mt-3 mb-1"
+        >Select a list to delete:</label
+      >
       <select v-model="deleteStudyList" id="activestudy">
         <option
           v-for="studylist in studylists"
@@ -271,7 +279,7 @@
         </option>
       </select>
       <br /><br />
-      <input type="submit" value="Delete selected list" />
+      <input class="mb-3" type="submit" value="Delete selected list" />
     </form>
     <!--create study lists end-->
   </div>

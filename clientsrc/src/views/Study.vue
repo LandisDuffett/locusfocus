@@ -1,27 +1,36 @@
 <template>
   <div class="study">
     <div>
-      <div class="card-body row">
-        <div v-show="!realReviewmode" v-if="begin" class="col-4 card mx-2">
+      <div class="card-body row ml-5">
+        <div
+          v-show="!realReviewmode"
+          v-if="begin"
+          class="col-4 card mx-2 boxborder rounded"
+        >
           <div class="mt-5">
-            {{ sessionlist[sessionindex].locus.description }}
+            <h5>{{ sessionlist[sessionindex].locus.description }}</h5>
           </div>
           <br />
           <div v-if="showLocusImage" class="mb-5">
             <img
+              class="picborder rounded"
               :src="sessionlist[sessionindex].locus.image"
               alt
               style="max-width: 8rem"
             />
           </div>
         </div>
-        <div v-if="realReviewmode && begin" class="col-4 card mx-2">
+        <div
+          v-if="realReviewmode && begin"
+          class="col-4 card mx-2 boxborder rounded"
+        >
           <div class="mt-5">
-            {{ reviewlist[sessionindex].locus.description }}
+            <h5>{{ reviewlist[sessionindex].locus.description }}</h5>
           </div>
           <br />
           <div v-if="showLocusImage" class="mb-5">
             <img
+              class="picborder rounded"
               :src="reviewlist[sessionindex].locus.image"
               alt
               style="max-width: 8rem"
@@ -31,26 +40,29 @@
         <div
           v-if="begin && !realReviewmode"
           v-show="showStudy"
-          class="col-7 card mx-2"
+          class="col-7 card mx-2 boxborder rounded ml-4"
         >
           <div class="mt-5">
-            {{ sessionlist[sessionindex].study.title }}
+            <h5>{{ sessionlist[sessionindex].study.title }}</h5>
           </div>
           <div v-if="showStudyImage" class="mt-3 row justify-content-center">
-            <span class="m-2"
+            <span class="m-2 p-1"
               ><img
+                class="picborder rounded"
                 :src="sessionlist[sessionindex].study.imgURL1"
                 alt
                 style="max-width: 8rem"
             /></span>
-            <span class="m-2"
+            <span class="m-2 p-1"
               ><img
+                class="picborder rounded"
                 :src="sessionlist[sessionindex].study.imgURL2"
                 alt
                 style="max-width: 8rem"
             /></span>
-            <span class="m-2"
+            <span class="m-2 p-1"
               ><img
+                class="picborder rounded"
                 :src="sessionlist[sessionindex].study.imgURL3"
                 alt
                 style="max-width: 8rem"
@@ -60,26 +72,29 @@
         <div
           v-if="begin && realReviewmode"
           v-show="showStudy"
-          class="col-7 card mx-2"
+          class="col-7 card mx-2 boxborder rounded ml-4"
         >
           <div class="mt-5">
-            {{ reviewlist[sessionindex].study.title }}
+            <h5>{{ reviewlist[sessionindex].study.title }}</h5>
           </div>
           <div v-if="showStudyImage" class="mt-3 row justify-content-center">
-            <span class="m-2"
+            <span class="m-2 p-1"
               ><img
+                class="picborder rounded"
                 :src="reviewlist[sessionindex].study.imgURL1"
                 alt
                 style="max-width: 8rem"
             /></span>
-            <span class="m-2"
+            <span class="m-2 p-1"
               ><img
+                class="picborder rounded"
                 :src="reviewlist[sessionindex].study.imgURL2"
                 alt
                 style="max-width: 8rem"
             /></span>
-            <span class="m-2"
+            <span class="m-2 p-1"
               ><img
+                class="picborder rounded"
                 :src="reviewlist[sessionindex].study.imgURL3"
                 alt
                 style="max-width: 8rem"
@@ -88,11 +103,14 @@
         </div>
       </div>
       <div class="row justify-content-center">
-        <div class="col-5 card m-2">
+        <div class="col-5 card m-2 boxborder rounded">
           <h4 class="p-2"><b>Preferences</b></h4>
           <section class="mb-2">
             <p style="font-size: 0.8rem" class="mb-0">
-              <b> Review mode (recycles incorrect answers on repeat)</b>
+              <b>
+                Review mode (recycles incorrect answers until all answered
+                correctly)</b
+              >
             </p>
             <div>
               <div class="row ml-3 justify-content-center">
@@ -199,7 +217,7 @@
             </div>
           </section>
         </div>
-        <div class="col-5 card m-2">
+        <div class="col-5 card m-2 boxborder rounded">
           <h4 class="p-2"><b>Controls</b></h4>
           <div class="row justify-content-center">
             <button
@@ -301,8 +319,12 @@ export default {
     },
     right() {
       if (this.realReviewmode && this.reviewlist.length == 1) {
-        this.reviewItems.splice(this.sessionindex, 1);
-        alert("You have finished this list! Click reset to go again.");
+        swal({
+          title: "You have completed this list",
+          buttons: {
+            confirm: { text: "Okay" },
+          },
+        });
       }
       if (
         !this.realReviewmode &&

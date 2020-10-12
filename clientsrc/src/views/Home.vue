@@ -1,6 +1,11 @@
 <template>
   <div class="home">
-    <h1>This is your home page.</h1>
+    <div class="header">
+      <p class="newfont" style="font-size: 5rem">
+        <span style="color: teal">Locus</span
+        ><span style="color: indigo"> Focus</span>
+      </p>
+    </div>
   </div>
 </template>
 
@@ -13,7 +18,7 @@ export default {
   },
   computed: {},
   methods: {},
-  components: {}
+  components: {},
 };
 </script>
 

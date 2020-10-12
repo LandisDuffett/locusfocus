@@ -2,25 +2,46 @@
   <div class="create">
     <div class="row">
       <h5 class="mx-5">
-        Add locus and study items to a session list by taking any slice of your
-        locus list(left)/any study list(right) and joining those items within a
-        session list. Create slices by choosing a starting point and then an
-        ending point for your slice and then click "add". You may add as many
-        slices as you want in any order, or add an entire list. Make sure your
-        locus list and your study list are equal in length. In the middle, you
-        can save this session list and use it for a study session. Or choose a
-        different session list, set your preferences (or use defaults) and go to
-        a study session.
+        <h3>Directions:</h3>
+        <ul style="text-align: left">
+          <li>
+            Add locus and study items to a session list by taking any slice of
+            your locus list(left) and any slice of a study list(right) and
+            joining those items within a session list. Each locus item will be
+            paired with the study item of the same number.
+          </li>
+          <li>
+            Create slices by choosing a starting point and then an ending point
+            for your slice and then click "add".
+          </li>
+          <li>
+            You may add as many slices as you want in any order, or add an
+            entire list.
+          </li>
+          <li>
+            Study session works best if your locus list and your study list are
+            equal in length.
+          </li>
+          <li>
+            In the middle, you can save this session list and use it for a study
+            session.
+          </li>
+          <li>
+            When you are ready, choose the list you just created or a different
+            session list, set your preferences (or use defaults) and go to a
+            study session.
+          </li>
+        </ul>
       </h5>
     </div>
     <!--set up locus items for a study session list-->
     <div class="row justify-content-center">
-      <div class="card col-4 m-2 p-2">
+      <div class="card col-4 m-2 p-2 boxborder rounded">
         <h5><b>Add locus items to a study session list:</b></h5>
         <div class="row justify-content-center">
           <div class="card col-10 m-2">
-            <div class="card-body row justify-content-center">
-              <div class="card col-11 m-2 p-2">
+            <div class="card-body row justify-content-center boxborder rounded">
+              <div class="card col-11 m-2 p-2 rounded">
                 <form>
                   <div>
                     <label for="locusstart"
@@ -40,7 +61,7 @@
                   </div>
                 </form>
               </div>
-              <div class="card col-11 m-2 p-2">
+              <div class="card col-11 m-2 p-2 rounded">
                 <form>
                   <label for="locusend"
                     >Select the last item in the "slice" of loci:</label
@@ -70,10 +91,10 @@
         <div>
           <form>
             <div class="row justify-content-center">
-              <div class="card col-8 m-2">
+              <div class="card col-8 m-2 boxborder rounded">
                 <p class="mt-2">Locus items in current session list:</p>
                 <div
-                  class="card mb-2"
+                  class="card mb-2 rounded"
                   style="overflow-y: scroll; height: 10rem"
                 >
                   <ol>
@@ -86,7 +107,7 @@
                     </li>
                   </ol>
                 </div>
-                <p class="mt-2">
+                <p class="mt-2 mb-0">
                   Number of locus items in current study session list:
                 </p>
                 <div>
@@ -106,7 +127,7 @@
       </div>
       <!--save list just created-->
       <div class="col-3 mt-5">
-        <div class="card col-10 m-2 ml-3 align-items-center">
+        <div class="card col-10 m-2 ml-3 align-items-center boxborder rounded">
           <div class="row">
             <h5 class="m-2 p-2">
               <b>Store session list just created:</b>
@@ -170,8 +191,8 @@
           </div>
         </div>
         <!--choose a list for study session-->
-        <div class="card col-10 m-2 ml-3 align-items-center">
-          <div class="row">
+        <div class="card col-10 m-2 ml-3 align-items-center boxborder rounded">
+          <div class="row p-3">
             <h5><b>Prepare current study session:</b></h5>
             <form>
               <div>
@@ -206,7 +227,7 @@
                 <button
                   @click="goStudy()"
                   type="button"
-                  class="btn btn-primary btn-sm mx-4 mb-2"
+                  class="btn btn-primary rounded btn-sm mx-4 mb-2"
                   data-dismiss="modal"
                 >
                   Go
@@ -217,10 +238,10 @@
         </div>
       </div>
       <!--set up study items for study sesison list-->
-      <div class="card col-4 m-2 p-2">
+      <div class="card col-4 m-2 p-2 boxborder rounded">
         <h5><b>Add study items to a study session list:</b></h5>
         <div class="row justify-content-center">
-          <div class="card col-10 m-2">
+          <div class="card col-10 m-2 boxborder rounded">
             <div class="card-body row justify-content-center p-0 pt-2">
               <form>
                 <label for="activestudy"
@@ -288,10 +309,10 @@
           <div>
             <form>
               <div class="row justify-content-center">
-                <div class="card col-8 m-2">
+                <div class="card col-8 m-2 boxborder rounded">
                   <p class="mt-2">Study items in current session list:</p>
                   <div
-                    class="card-mb-2"
+                    class="card-mb-2 rounded"
                     style="overflow-y: scroll; height: 10rem"
                   >
                     <ol>
