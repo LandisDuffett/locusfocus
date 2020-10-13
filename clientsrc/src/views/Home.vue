@@ -17,6 +17,7 @@
          <li><router-link :to="{ name: 'tutorial' }" class="nav-link"
             >text-based tuotrial (with screenshots)</router-link
           ></li>
+          <li><a class="ml-3" href="#" @click="login">go straight to app (login required)</a></li>
          </ul>
       </div>
       <div class="row text-left mx-4">
@@ -113,7 +114,16 @@ export default {
     return {};
   },
   computed: {},
-  methods: {},
+  methods: {
+    async login() {
+      await this.$auth.loginWithPopup();
+      this.$store.dispatch("setBearer", this.$auth.bearer);
+      this.$store.dispatch("getProfile");
+      console.log("this.$auth.user: ");
+      console.log(this.$auth.user);
+      this.$router.push({ name: "create", path: "/create" });
+    },
+  },
   components: {},
 };
 </script>
