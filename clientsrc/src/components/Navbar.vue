@@ -39,6 +39,15 @@
             >Set up study session</router-link
           >
         </li>
+        <li
+          class="nav-item m-2"
+          v-if="$auth.isAuthenticated"
+          :class="{ active: $route.name == 'tutorial' }"
+        >
+          <router-link class="nav-link" :to="{ name: 'tutorial' }"
+            >Help</router-link
+          >
+        </li>
       </ul>
       <span class="navbar-text">
         <button

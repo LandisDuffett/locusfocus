@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import Create from '../views/Create.vue'
 import Setup from '../views/Setup.vue'
 import Study from '../views/Study.vue'
+import Tutorial from '../views/Tutorial.vue'
 import { authGuard } from "@bcwdev/auth0-vue"
 
 Vue.use(Router)
@@ -16,6 +17,11 @@ export default new Router({
       component: Home
     },
     {
+      path: '/tutorial',
+      name: 'tutorial',
+      component: Tutorial
+    },
+    {
       path: '/create',
       name: 'create',
       component: Create,
@@ -24,12 +30,14 @@ export default new Router({
     {
       path: '/setup',
       name: 'setup',
-      component: Setup
+      component: Setup,
+      beforeEnter: authGuard
     },
     {
       path: '/study',
       name: 'study',
-      component: Study
+      component: Study,
+      beforeEnter: authGuard
     },
     {
       path: "*",
