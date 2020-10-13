@@ -41,7 +41,7 @@
     </div>
     <!--set up locus items for a study session list-->
     <div class="row justify-content-center">
-      <div class="card col-4 m-2 p-2 boxborder rounded">
+      <div class="card col-12 col-md-4 m-2 p-2 boxborder rounded">
         <h5><b>Add locus items to a study session list:</b></h5>
         <div class="row justify-content-center">
           <div class="card col-10 m-2">
@@ -131,7 +131,7 @@
         </div>
       </div>
       <!--save list just created-->
-      <div class="col-3 mt-5">
+      <div class="col-12 col-md-3 mt-5">
         <div class="card col-10 m-2 ml-3 align-items-center boxborder rounded">
           <div class="row">
             <h5 class="m-2 p-2">
@@ -243,7 +243,7 @@
         </div>
       </div>
       <!--set up study items for study sesison list-->
-      <div class="card col-4 m-2 p-2 boxborder rounded">
+      <div class="card col-12 col-md-4 m-2 p-2 boxborder rounded">
         <h5><b>Add study items to a study session list:</b></h5>
         <div class="row justify-content-center">
           <div class="card col-10 m-2 boxborder rounded">

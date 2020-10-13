@@ -49,3 +49,23 @@ font-family: 'Righteous', cursive;
  border-top:1px solid gray;
 }
 
+@media screen and (max-width: 575px) {
+  #media {
+    display: none;
+  }
+   #smallerfont {
+    font-size: 1rem;
+  }
+}
+
+@media screen and (min-width: 576px) {
+  #largestudy {
+    margin-left: 3rem;
+  }
+}
+
+@media screen and (max-width: 575px) {
+  #smallmarg {
+    margin-left: -0.5rem;
+}
+}

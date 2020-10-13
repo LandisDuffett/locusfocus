@@ -16,9 +16,9 @@
           placeholder="optional image"
           v-model="newLocus.image"
         />
-        <button type="submit">Add</button>
+        <button class="btn border btn-info rounded" type="submit">Add</button>
       </form>
-      <div class="container">
+      <div id="media" class="container">
         <h3 class="mt-2 p-2">Edit items in your locus list:</h3>
         <form>
           <div class="card rounded boxborder">
@@ -98,7 +98,7 @@
             <input
               type="submit"
               value="Create new list"
-              class="mx-2"
+              class="mx-2 btn border btn-info rounded"
               style="max-height: 2rem"
             />
           </div>
@@ -152,10 +152,14 @@
             placeholder="add image URL (optional)"
             class="col-10 mb-2"
           />
-          <input type="submit" value="Add item" class="col-3 mb-2" />
+          <input
+            type="submit"
+            value="Add item"
+            class="btn border btn-info rounded col-3 mb-2"
+          />
         </form>
       </div>
-      <div class="container mt-4">
+      <div id="media" class="container mt-4">
         <p>Edit items in your study list:</p>
         <form>
           <div class="card">
@@ -279,7 +283,11 @@
         </option>
       </select>
       <br /><br />
-      <input class="mb-3" type="submit" value="Delete selected list" />
+      <input
+        class="mb-3 btn border btn-info rounded"
+        type="submit"
+        value="Delete selected list"
+      />
     </form>
     <!--create study lists end-->
   </div>

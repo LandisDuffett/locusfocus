@@ -2,11 +2,11 @@
   <div class="study">
     <h2 class="newfontnosize" style="color: indigo">Study session</h2>
     <div>
-      <div class="card-body row ml-5">
+      <div class="card-body row" id="largestudy">
         <div
           v-show="!realReviewmode"
           v-if="begin"
-          class="col-4 card mx-2 boxborder rounded"
+          class="col-5 col-md-4 card mx-2 boxborder rounded"
         >
           <div class="mt-5">
             <h5>{{ sessionlist[sessionindex].locus.description }}</h5>
@@ -14,6 +14,7 @@
           <br />
           <div v-if="showLocusImage" class="mb-5">
             <img
+              id="smallmarg"
               class="picborder rounded"
               :src="sessionlist[sessionindex].locus.image"
               alt
@@ -23,7 +24,7 @@
         </div>
         <div
           v-if="realReviewmode && begin"
-          class="col-4 card mx-2 boxborder rounded"
+          class="col-5 col-md-4 card mx-2 boxborder rounded"
         >
           <div class="mt-5">
             <h5>{{ reviewlist[sessionindex].locus.description }}</h5>
@@ -41,7 +42,7 @@
         <div
           v-if="begin && !realReviewmode"
           v-show="showStudy"
-          class="col-7 card mx-2 boxborder rounded ml-4"
+          class="col-5 col-md-7 card mx-2 boxborder rounded ml-4"
         >
           <div class="mt-5">
             <h5>{{ sessionlist[sessionindex].study.title }}</h5>
@@ -73,7 +74,7 @@
         <div
           v-if="begin && realReviewmode"
           v-show="showStudy"
-          class="col-7 card mx-2 boxborder rounded ml-4"
+          class="col-5 col-md-7 card mx-2 boxborder rounded ml-4"
         >
           <div class="mt-5">
             <h5>{{ reviewlist[sessionindex].study.title }}</h5>
@@ -105,7 +106,7 @@
       </div>
       <div class="row justify-content-center">
         <div class="col-5 card m-2 boxborder rounded">
-          <h4 class="p-2"><b>Preferences</b></h4>
+          <h4 class="p-2" id="smallerfont"><b>Preferences</b></h4>
           <section class="mb-2">
             <p style="font-size: 0.8rem" class="mb-0">
               <b>
@@ -219,7 +220,7 @@
           </section>
         </div>
         <div class="col-5 card m-2 boxborder rounded">
-          <h4 class="p-2"><b>Controls</b></h4>
+          <h4 class="p-2" id="smallerfont"><b>Controls</b></h4>
           <div class="row justify-content-center">
             <button
               @click="start()"
