@@ -1,5 +1,6 @@
 <template>
   <div class="study">
+    <h2 class="newfontnosize" style="color: indigo">Study session</h2>
     <div>
       <div class="card-body row ml-5">
         <div

@@ -1,6 +1,11 @@
 <template>
   <div class="create">
     <div class="row">
+      <div class="col justify-content-center">
+        <h2 class="newfontnosize" style="color: teal">
+          Set up your study session
+        </h2>
+      </div>
       <h5 class="mx-5">
         <h3>Directions:</h3>
         <ul style="text-align: left">

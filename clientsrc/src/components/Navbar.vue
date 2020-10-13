@@ -15,7 +15,10 @@
       <ul class="navbar-nav mr-auto">
         <li class="nav-item m-2" :class="{ active: $route.name == 'home' }">
           <router-link :to="{ name: 'home' }" class="nav-link"
-            ><h4>Home</h4></router-link
+            ><h4 class="newfontnosize">
+              <span style="color: teal">Locus</span
+              ><span style="color: indigo">Focus</span>
+            </h4></router-link
           >
         </li>
         <li
