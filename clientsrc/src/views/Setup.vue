@@ -232,7 +232,7 @@
                 <button
                   @click="goStudy()"
                   type="button"
-                  class="btn btn-primary rounded btn-sm mx-4 mb-2"
+                  class="btn btn-info rounded btn-sm mx-4 mb-2"
                   data-dismiss="modal"
                 >
                   Go

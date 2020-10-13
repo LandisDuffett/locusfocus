@@ -71,7 +71,7 @@
           <button
             @click="clearLocuslist()"
             type="button"
-            class="row btn btn-xs border rounded btn-primary m-1 p-2"
+            class="row btn btn-xs border rounded btn-info m-1 p-2"
           >
             delete all items from list
           </button>
